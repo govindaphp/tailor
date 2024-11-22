@@ -1,7 +1,7 @@
 @extends('front.layouts.layout')
 
 @section('content')
-<a href="{{ route('google.redirect') }}" class="btn btn-primary"> Login with Google </a>
+
 <div id="carouselExampleCaptions" class="carousel cust-slider slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

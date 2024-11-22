@@ -42,10 +42,17 @@ return [
         ],
 
         'admin' => [
-
             'driver' => 'session',
-
             'provider' => 'admins',
+        ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+
+        ],
+        'vendor' => [
+            'driver' => 'session',
+            'provider' => 'vendors',
 
         ],
     ],
@@ -78,10 +85,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'vendors' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Vendor::class,
+        ],
     ],
 
     /*

@@ -1,13 +1,13 @@
 @extends('admin.layouts.layout')
 
-@section('title','Dashboard')
+@section('title','VIP Customer View')
 @section('admin-content')
 
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Customer Management</h3>
+                <h3>VIP Customer Management</h3>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
             <div class="col-md-12 customer-form-first">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Customer View </h2>
+                        <h2>VIP Customer View </h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -52,59 +52,63 @@
                             </div>
 
                             <div class="form-group row">
-                                <!-- Third row -->
-                                <div class="col-md-6">
-                                    <label class="control-label">Password<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="password" class="form-control"  name="password" value="{{ $user_detail->password }}" disabled>
-                                </div>
 
                                 <div class="col-md-6">
-                                    <label class="control-label">Customer Type<span class="mandatory" style="color:red"> *</span></label>
-                                    <select id="heard12" class="form-control" disabled>
-                                        <option value="0" {{ $user_detail->customer_type == 0 ? 'selected' : '' }}>NON VIP</option>
-                                        <option value="1" {{ $user_detail->customer_type == 1 ? 'selected' : '' }}>VIP</option>
+                                    <label class="control-label">Gender</label>
+                                    <select id="heard" class="form-control" name="gender" disabled>
+                                        <option value="1" {{ $user_detail->gender == 1 ? 'selected' : '' }} disabled>Male</option>
+                                        <option value="2" {{ $user_detail->gender == 2 ? 'selected' : '' }} disabled>Female</option>
                                     </select>
                                 </div>
+                                         <!-- Fourth row -->
+                                 <div class="col-md-6">
+                                    <label class="control-label">Address<span class="mandatory" style="color:red"> *</span></label>
+                                    <input type="text" class="form-control"  name="user_address" value="{{ $user_detail->address }}" disabled>
+                                </div>
+
                             </div>
 
                             <div class="form-group row">
-                                <!-- Fourth row -->
+
+
                                 <div class="col-md-6">
-                                    <label class="control-label">Address<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control"  name="user_address" value="{{ $user_detail->user_address }}" disabled>
+                                    <label class="control-label">Country</label>
+                                    <input type="text" class="form-control" name="user_country" value="{{ $countries->country_name }}" disabled>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">City</label>
-                                    <input type="text" class="form-control" name="user_city" value="{{ $user_detail->user_city }}" disabled>
+                                    <label class="control-label">State</label>
+                                    <input type="text" class="form-control" name="user_states" value="{{ $state->state_name }}" disabled>
                                 </div>
+
                             </div>
 
                             <div class="form-group row">
                                 <!-- Fifth row -->
+
                                 <div class="col-md-6">
-                                    <label class="control-label">State</label>
-                                    <input type="text" class="form-control" name="user_states" value="{{ $user_detail->user_states }}" disabled>
+                                    <label class="control-label">City</label>
+                                    <input type="text" class="form-control" name="user_city" value="{{ $city->city_name }}" disabled>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <label class="control-label">Zip Code</label>
-                                    <input type="text" class="form-control"  name="user_zipcode" value="{{ $user_detail->user_zipcode }}" disabled>
+                                    <input type="text" class="form-control"  name="user_zipcode" value="{{ $user_detail->zipcode }}" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <!-- Sixth row -->
                                 <div class="col-md-6">
-                                    <label class="control-label">Country</label>
-                                    <input type="text" class="form-control" name="user_country" value="{{ $user_detail->user_country }}" disabled>
-                                </div>
-
-                                <div class="col-md-6">
                                     <label class="control-label">Profile Image</label>
                                     <div>
                                         <!-- Image Display -->
                                         <img src="{{ asset('public/admin/uploads/user/'. $user_detail->profile_image) }}" id="upload_image_display" style="margin-top: 10px; border-radius: 10px;" alt="brand image" height="80px" width="100px">
                                     </div>
-                                </div>
+                                  </div>
+
+
+                            </div>
                             </div>
 
 
@@ -112,33 +116,14 @@
 
                             <div class="form-group row">
                                 <!-- Tenth row -->
-                                <div class="col-md-6">
-                                    <label class="control-label">Gender</label>
-                                    <select id="heard" class="form-control" name="gender" disabled>
-                                        <option value="Male" {{ $user_detail->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                        <option value="Female" {{ $user_detail->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">YouTube</label>
-                                    <input type="text" class="form-control"  name="user_youtube" value="{{ $user_detail->user_youtube }}" disabled>
-                                </div>
+
+
                             </div>
-                            <div class="form-group row">
-                                <!-- Ninth row -->
-                                <div class="col-md-6">
-                                    <label class="control-label">Facebook</label>
-                                    <input type="text" class="form-control" name="user_facebook" value="{{ $user_detail->user_facebook }}" disabled>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">Twitter</label>
-                                    <input type="text" class="form-control"  name="user_twitter" value="{{ $user_detail->user_twitter }}" disabled>
-                                </div>
-                            </div>
+
 
                             <div class="form-group row">
                                 <div class="col-md-12 go-back-btn mt-3">
-                                    <a href="{{ url('admin/customer-list') }}" class="btn btn-primary">Go Back</a>
+                                <button type="button" class="btn btn-primary" onclick="history.back()">Go Back</button>
                                 </div>
                             </div>
 

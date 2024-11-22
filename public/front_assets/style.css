@@ -259,9 +259,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 /* *** Start editing below this line *** */
-.container-fluid {
+/*.container-fluid {
   max-width: 1600px;
-}
+}*/
 .banner-blocks {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -682,13 +682,10 @@ p.no_email_footer span {
 }
 
 .center-row {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
+    
 }
 .btm-row {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-	    background-color: #FF8A00;
+	background-color: #FF8A00;
 }
 .hero__search__form form input {
     width: 100%;
@@ -1109,9 +1106,43 @@ ul.feat--vip li {
     }
 }
 @media only screen and (max-width: 767px) {
+
+.elite-register .signup-login-btn {
+    width: 100%;
+    margin: auto;
+    padding-left: 0px;
+    padding-right: 0;
+}
+
+.elite-register .signup-inner-content {
+    background-color: #e7e7e7;
+    width: 100%;
+}
     .testimonial{
         padding: 0 20px;
     }
+
+.signup-login-btn .customer {
+    padding: 9px 0 !important;
+}
+
+.signup-login-btn .vendor {
+    padding: 9px 0 !important;
+}
+
+.signup-inner-content .auth-form-btn {
+    padding: 9px 0 !important;
+    border-radius: 16px !important;
+}
+
+.signup-inner-content .form-register {
+    padding: 20px 21px !important;
+}
+
+p.already-account {
+    font-size: 15px !important;
+}
+
 }
 @media only screen and (max-width: 480px) {
     .content{
@@ -1420,9 +1451,357 @@ div#footer-bottom {
 }
 
 
+
+
+
+/* signup css*/
+.signup-login-btn {
+    width: 40%;
+    margin: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.signup-inner-content img {
+    display: flex;
+    margin: auto;
+    width: 68px;
+    margin-bottom: 18px;
+}
+.signup-inner-content {
+    background-color: #e7e7e7;
+    width: 40%;
+    margin: auto;
+    padding: 0px;
+    margin-top: 11px;
+    padding-top: 1px;
+    border-radius: 5px;
+    padding-bottom: 25px;
+}
+
+.signup-inner-content h4 {
+    color: #fff;
+    font-size: 28px;
+    font-family: 'Nunito';
+    font-weight: 800;
+}
+
+.signup-inner-content .form-register .form-group input {
+    padding: 10px 11px !important;
+    border: 1px solid lightgray;
+    box-shadow: none;
+}
+
+.signup-inner-content .form-register .form-group {
+    margin-bottom: 12px;
+}
+.elite-login .form-register.form-login {
+    padding-bottom: 5px;
+}
+
+.signup-inner-content .form-register {
+    background-color: #fff;
+    width: 90%;
+    margin: auto;
+    border-radius: 20px;
+    padding: 20px 35px;
+    margin-top: 25px;
+    padding-bottom: 11px;
+}
+.signup-inner-content input::placeholder {
+    font-size: 15px;
+    color: #696974;
+    font-weight: 500;
+}
+.signup-inner-content .form-control-lg {
+    padding: 0 22px;
+}
+
+.signup-inner-content h5 {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+    font-family: 'Nunito';
+    margin-bottom: 0;
+}
+
+.signup-inner-content p {
+    font-family: 'Nunito';
+    margin-bottom: 0px;
+}
+.signup-inner-content .form-check .form-check-label input[type=checkbox]:checked + .input-helper:before {
+    background: #00B207;
+    border-width: 0;
+}
+
+.signup-inner-content .form-check .form-check-label input[type=checkbox] + .input-helper:before {
+    border:2px solid #00B207;
+}
+.signup-inner-content input.form-check-input {
+    border: 2px solid #00B207;
+    margin-top: 8px;
+    box-shadow: none;
+}
+
+.signup-inner-content .form-check-input:checked {
+    background-color: #00B207;
+    border-width: 0;
+    box-shadow: none;
+}
+
+.signup-inner-content .auth-form-btn {
+    background-color: #00B207;
+    color: #fff;
+    font-weight: 800;
+    font-family: 'Nunito';
+    font-size: 18px !important;
+    padding: 11px 0;
+    border-radius: 16px;
+}
+.signup-inner-content .auth-form-btn:hover {
+    color: #fff;
+    background-color: #ff8a00;
+}
+.signup-inner-content label.form-check-label.text-muted {
+    font-family: 'Nunito';
+    color: black;
+    font-weight: 500;
+}
+
+p.already-account {
+    text-align: center;
+    padding-top: 11px;
+    color: black;
+    font-family: 'Nunito';
+    margin-bottom: 0;
+}
+p.already-account a {
+    color: #FF8A00;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.signup-inner-content .form-check .form-check-label input[type=checkbox]:checked + .input-helper:after {
+    width: 18px !important;
+    opacity: 1;
+    line-height: 18px;
+    font-size: 12px;
+    padding-left: 1px;
+}
+
+a.continue {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    color: #B5B5BE;
+    text-decoration: none;
+    font-family: 'Nunito';
+}
+.signup-inner-content .three-btn img.one {
+    background-color: #171725;
+    border-radius: 16px;
+    padding: 0px 30px;
+    width: 80px;
+    height: 42px;
+}
+.signup-inner-content .three-btn img.two {
+    background-color: #3C66C3;
+    border-radius: 16px;
+    padding: 0px 36px;
+    width: 80px;
+    height: 42px;
+}
+
+.signup-inner-content .three-btn img.three {
+    background-color: #CF4232;
+    border-radius: 16px;
+    padding: 0px 32px;
+    width: 80px;
+    height: 42px;
+}
+
+.signup-inner-content .three-btn {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11px;
+}
+
+.signup-login-btn .customer {
+    background-color: #FF8A00;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Nunito';
+    border-radius: 5px;
+    padding: 11px 0;
+}
+.signup-login-btn .vendor {
+    background-color: #fff;
+    color: black;
+    font-size: 18px;
+    font-family: 'Nunito';
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    border: solid 1px #ff8a00;
+    padding: 11px 0;
+}
+.row.elite-register-inner {
+    display: block;
+    margin: 50px 0;
+}
+
+.signup-login-btn .customer:hover {
+    background-color: #00b207;
+}
+
+.signup-login-btn .vendor:hover {
+    background-color: #00b207;
+    color: #fff;
+    border: solid 1px #00b207;
+}
+
+.elite-login .reset-pass a {
+    color: #171725;
+    font-family: 'Nunito';
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 600;
+}
+
+.elite-login .reset-pass a:hover {
+    color: #ff8a00;
+}
+
+p.already-account a:hover {
+    color: #00b207;
+}
+
+a.continue:hover {
+    color: #ff8a00;
+}
+
+
+/*profile setting css*/
+
+.profile-setting-form .grid-margin.stretch-card .card-body {
+    padding: 30px !important;
+}
+
+form.profile-input-form input {
+    height: 48px;
+}
+form.profile-input-form select {
+    height: 48px;
+}
+
+.profile-setting-form h4.card-title {
+    font-size: 22px;
+    font-family: 'Nunito';
+    margin-bottom: 8px;
+}
+
+.profile-setting-form p.card-description {
+    font-size: 16px;
+    font-family: 'Nunito';
+}
+.profile-setting-form button.btn.btn-primary {
+    background-color: #00B207;
+    border: none;
+    width: 23%;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+
+
+.profile-setting-form button.btn.btn-light {
+    background-color: #cf4232;
+    color: #fff;
+    border: none;
+    width: 23%;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+.profile-setting-form .form-control:focus {
+    border: solid 1px #FF8A00;
+}
+form.profile-input-form select:focus {
+    border: solid 1px #FF8A00 !important;
+    box-shadow: none;
+    outline: none;
+}
+
+.profile-setting-form .profile-right h4 {
+   font-size: 22px;
+    font-family: 'Nunito';
+    margin-bottom: 8px;
+    color: black;
+}
+
+.profile-setting-form .profile-right .card-body {
+    padding: 31px 28px !important;
+}
+
+nav#sidebar.sidebar .nav .nav-item.active > .nav-link {
+    background: #FF8A00;
+    position: relative;
+}
+
+nav#sidebar.sidebar .nav:not(.sub-menu) > .nav-item.active {
+    background: #FF8A00;
+}
+
+nav#sidebar.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded=true] {
+    background: #FF8A00;
+    color: #fff;
+}
+
+nav#sidebar.sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded=true] {
+    border-radius: 8px 8px 0 0;
+    background: #FF8A00;
+    color: #fff;
+}
+
+nav#sidebar.sidebar .nav.sub-menu {
+    margin-bottom: 0;
+    margin-top: 0;
+    list-style: none;
+    padding: 0.25rem 0 0 1rem;
+    background: #000;
+    padding-bottom: 12px;
+}
+
+
+nav#sidebar.sidebar .nav.sub-menu .nav-item .nav-link {
+    color: #fff;
+    padding: 0.7rem 1rem;
+    position: relative;
+    font-size: 0.875rem;
+    line-height: 1;
+    height: auto;
+    border-top: 0;
+    font-weight: 400;
+}
+
+.navbar-top .navbar-brand-wrapper.d-flex.align-items-center.justify-content-start {
+    padding-left: 48px;
+}
+
+
 @media screen and (max-width: 767px) {
 	.info-head {
     display: none;
+}
+.row.elite-register-inner {
+    display: block;
+    margin: 50px 0;
+    margin-top: 18px;
 }
 
 .owl-theme .owl-controls .owl-next {
@@ -1636,10 +2015,55 @@ ul.navbar-nav.desk-hide {
     padding-top: 75px !important;
     padding-bottom: 100px !important;
 }
+
+.navbar-top .navbar-brand-wrapper.d-flex.align-items-center.justify-content-start {
+    padding-left: 11px;
+}
+
+.profile-setting-form button.btn.btn-primary {
+    width: 50%;
+    height: 48px;
+}
+
+.profile-setting-form button.btn.btn-light {
+    width: 50%;
+    height: 48px;
+}
+.profile-right {
+    width: 100% !important;
+}
+
 }
 
 
 @media screen and (min-width: 768px) and (max-width: 1024px) { 
+
+.signup-inner-content {
+    width: 68%;
+}
+
+.signup-login-btn {
+    width: 70%;
+    margin: auto;
+}
+
+    .card-provide-inner {
+
+        display: block;
+
+    }
+.profile-setting-form button.btn.btn-primary {
+    width: 50%;
+    height: 48px;
+}
+
+.profile-setting-form button.btn.btn-light {
+    width: 50%;
+    height: 48px;
+}
+.navbar-top .navbar-brand-wrapper.d-flex.align-items-center.justify-content-start {
+    padding-left: 28px;
+}
     .searchbar {
     display: none !important;
 }    .navbar-toggler-icon {        background-image: url(images/bar.png);    }	.mob-right button.navbar-toggler {        background: none;        padding-right: 0px;        border: none;    }	    .offcanvas-header .btn-close {        background-color: #FF8A00;        opacity: 1;        border-radius: 50px;    }	    .offcanvas-body ul.navbar-nav li.nav-item.active a {        color: #ff8a00;    }	    .offcanvas-body ul.navbar-nav li.nav-item {        margin-bottom: 10px;    }	.offcanvas-body ul.navbar-nav li.nav-item.active a {        color: #ff8a00;    }	    .offcanvas-body ul.navbar-nav li.nav-item a {        color: #000000;    }	    .container.newsletter {        padding-right: calc(var(--bs-gutter-x)* .5);        padding-left: calc(var(--bs-gutter-x)* .5);        margin-bottom: 50px;		        padding-top: 55px;        padding-bottom: 55px;    }		.news--boxs input {        width: 100%;    }	    .news--boxs form {        display: block !important;    }	    .news--boxs button.btn {        margin-left: 0px;        margin-top: 15px;    }	ul.navbar-nav.desk-hide {    display: block !important;}

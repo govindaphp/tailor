@@ -1,6 +1,6 @@
 @extends('admin.layouts.layout')
 
-@section('title','Customer List')
+@section('title','VIP Customer List')
 @section('admin-content')
 
 <!-- <style>
@@ -8,6 +8,64 @@
     height: 611px;
 }
 </style> -->
+
+
+
+<style>
+
+
+div#datatable-buttons_length {
+    width: 50% !important;
+}
+
+div#datatable-buttons_filter {
+    margin-top: -48px;
+    margin-bottom: 14px;
+}
+.dt-buttons.btn-group a.btn {
+    border: solid 2px #80808036;
+    display: flex;
+    margin-bottom: 12px;
+    border-radius: 5px;
+}
+
+a.btn.btn-default.buttons-copy.buttons-html5.btn-sm {
+    border-radius: 5px;
+}
+
+a.btn.btn-default.buttons-csv.buttons-html5.btn-sm {
+    border-radius: 5px;
+}
+
+a.btn.btn-default.buttons-excel.buttons-html5.btn-sm {
+    border-radius: 5px;
+}
+
+a.btn.btn-default.buttons-pdf.buttons-html5.btn-sm {
+    border-radius: 5px;
+}
+
+a.btn.btn-default.buttons-print.btn-sm {
+    border-radius: 5px;
+}
+
+.dt-buttons.btn-group {
+    gap: 11px;
+}
+.toggle-group .btn {
+    font-size: 13px;
+}
+select#heard12 {
+    font-size: 14px;
+}
+.table-responsive .table td, .table th {
+    padding-bottom: 0px;
+}
+
+
+
+</style>
+
 <!-- Bootstrap Toggle CSS -->
 
 
@@ -19,7 +77,7 @@
   <div class="">
     <div class="page-title">
       <div class="title_left">
-        <h3>Customer Management</h3>
+          <!-- <h3>Customer Management</h3> -->
         <!-- @if(Session::has('message'))
           <div class="alert alert-success alert-dismissable">
               <i class="fa fa-check"></i>
@@ -46,8 +104,8 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title d-flex justify-content-between align-items-center">
-            <h2 class="mb-0">Customer List</h2>
-            <a href="{{route('admin.customer_form')}}" class="btn btn-primary">Add New</a>
+            <h2 class="mb-0">VIP Customer List</h2>
+            <a href="{{route('admin.vip_customer_form')}}" class="btn btn-primary">Add New</a>
           </div>
           <div class="x_content">
             <div class="row">
@@ -62,7 +120,7 @@
                         <th>Mobile No.</th>
                         <th>Vendor Application</th>
                         <!-- <th>Gender</th> -->
-                        <th>Account</th>
+                        <th>Account Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -76,12 +134,6 @@
                         <td>{{$list->email_id}}</td>
                         <td>{{$list->mobile_number}}</td>
                         <td>
-                    <!-- <?php  if (!empty($list->profile_image)) { ?>
-                      <img src="{{ asset('public/admin/uploads/user/'. $list->profile_image) }}" id="upload_image_display" style="margin-top: 10px; border-radius: 10px;" alt="brand image" height="80px" width="100px">
-                    <?php } else { ?>
-                        <img class="img-responsive"  style="margin-top: 10px; border-radius: 10px;" src="{{ url('/') }}/public/admin/uploads/user/default.jpg" height="80px" width="100px" alt="profile_img">
-                    <?php } ?> -->
-
                     <select id="heard12" class="form-control" required>
 													<option value="" >Choose Option</option>
 													<option value="0">Approve</option>
@@ -90,15 +142,15 @@
 
                       </td>
                         <!-- <td>{{$list->gender}}</td> -->
-                        <td>
+                        <td class="approve-btn">
                           <input data-id="{{$list->id}}" class="toggle-class" type="checkbox"
                             data-onstyle="success" data-offstyle="danger"
-                            data-toggle="toggle" data-on="Approve" data-off="Suspend"
+                            data-toggle="toggle" data-on="Approved" data-off="Suspended"
                             {{ $list->user_status ? 'checked' : '' }}>
                         </td>
                         <td>
-                          <a href="{{ route('admin.customer_view',$list->id)}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                          <a href="{{ route('admin.customer_edit',$list->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                          <a href="{{ route('admin.vip_customer_view',$list->id)}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                          <a href="{{ route('admin.vip_customer_edit',$list->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                           <a title="Delete User" class="btn btn-sm btn-danger" href="{{ route('admin.delete_user_list',$list->id)}}" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash"></i>
                         </td>
                       </tr>
@@ -122,7 +174,7 @@
         });
     </script>
 <script>
-    $('.toggle-class').one("change", function() {
+    $('.toggle-class').on("change", function() {
         var status = $(this).prop('checked') == true ? 1 : 0;
         var id = $(this).data('id');
         $.ajax({
@@ -165,36 +217,5 @@
         @endif
     });
 </script>
-
-
-
-<!-- <script>
-    $('.toggle-class').on("change", function() {
-        var status = $(this).prop('checked') == true ? 1 : 0;
-        var id = $(this).data('id');
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "<?php echo url('/admin/customer-status'); ?>",
-            data: {
-              _token: '{{ csrf_token() }}',
-                'status': status,
-                'id': id
-            },
-
-            success: function(data) {
-
-                if (data.success) {
-                    toastr.success('status changeed successfully');
-                } else {
-                    toastr.error('Failed to change status');
-
-                }
-            },
-
-        });
-    })
-</script> -->
-
 
 @endsection
