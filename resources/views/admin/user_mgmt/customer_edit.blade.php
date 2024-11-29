@@ -6,9 +6,7 @@
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
-            <div class="title_left">
-                <h3>Customer Management</h3>
-            </div>
+
 
 
         </div>
@@ -32,7 +30,7 @@
                                 <!-- First row -->
                                 <div class="col-md-6">
                                     <label class="control-label">First Name<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control" value="{{ $user_detail->first_name }}" autofocus onkeyup="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter First Name" name="first_name">
+                                    <input type="text" class="form-control" value="{{ $user_detail->first_name }}" autofocus oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter First Name" name="first_name">
                                     @if ($errors->has('first_name'))
                                     <span class="" style="color:red">
                                         {{ $errors->first('first_name') }}
@@ -43,7 +41,7 @@
 
                                 <div class="col-md-6">
                                     <label class="control-label">Last Name<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control" value="{{ $user_detail->last_name }}" autofocus onkeyup="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter Last Name" name="last_name">
+                                    <input type="text" class="form-control" value="{{ $user_detail->last_name }}" autofocus oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter Last Name" name="last_name">
                                     @if ($errors->has('last_name'))
                                     <span class="" style="color:red">
                                         {{ $errors->first('last_name') }}
@@ -66,7 +64,7 @@
 
                                 <div class="col-md-6">
                                     <label class="control-label">Mobile Number<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control" value="{{ $user_detail->mobile_number }}" placeholder="Enter Mobile Number" name="mobile_number" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required >
+                                    <input type="text" class="form-control" value="{{ $user_detail->mobile_number }}" placeholder="Enter Mobile Number" name="mobile_number" oninput="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required >
                                     @if ($errors->has('mobile_number'))
                                     <span class="" style="color:red">
                                         {{ $errors->first('mobile_number') }}
@@ -182,7 +180,7 @@
 
                                 <div class="col-md-6">
                                     <label class="control-label">Zip Code</label>
-                                    <input type="text" class="form-control" value="{{ $user_detail->zipcode }}" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required placeholder="Enter Zip Code" name="user_zipcode">
+                                    <input type="text" class="form-control" value="{{ $user_detail->zipcode }}" oninput="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required placeholder="Enter Zip Code" name="user_zipcode">
                                 </div>
 
 

@@ -12,8 +12,10 @@ class Vendor extends Authenticatable
     use HasFactory;
     protected $table = 'vendors';
 
-    // protected $fillable = [
-    //     'email',
-    //     'password',
-    // ];
+    protected $primaryKey = 'vendor_id';
+    
+    public function getAuthIdentifierName()
+    {
+        return 'vendor_id'; // Tell Laravel to use `vendor_id` for authentication
+    }
 }

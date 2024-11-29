@@ -49,11 +49,12 @@ class GoogleLoginController extends Controller
         // Check if the vendor is authenticated
     if (Auth::guard('user')->check()) {
         // Redirect to the vendor dashboard if authenticated
-        return redirect()->to('/customer');
+        
+        return redirect()->to('/customerDashboard');
     } else {
         // Log debug info to help troubleshoot
-        logger()->error('Vendor login failed.', [
-            'vendor_id' => $vendor->id,
+        logger()->error('customer login failed.', [
+            'user_id' => $user->id,
             'authenticated' => Auth::guard('user')->check()
         ]);
         return redirect()->to('/login')->with('error', 'Authentication failed.');
@@ -97,7 +98,7 @@ class GoogleLoginController extends Controller
             $vendor->is_social = "1";
             $vendor->is_deleted = "0";
             $vendor->save();
-
+            $vendor_id = $vendor->vendor_id;
            
         }
         Auth::guard('vendor')->login($vendor);
@@ -105,11 +106,12 @@ class GoogleLoginController extends Controller
         // Check if the vendor is authenticated
     if (Auth::guard('vendor')->check()) {
         // Redirect to the vendor dashboard if authenticated
-        return redirect()->to('/vendors');
+        
+        return redirect()->to('/vendorsDasboard');
     } else {
         // Log debug info to help troubleshoot
         logger()->error('Vendor login failed.', [
-            'vendor_id' => $vendor->id,
+            'vendor_id' => $vendor->vendor_id,
             'authenticated' => Auth::guard('vendor')->check()
         ]);
         return redirect()->to('/login')->with('error', 'Authentication failed.');

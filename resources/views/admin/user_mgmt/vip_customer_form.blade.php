@@ -16,13 +16,6 @@
 
 <div class="right_col" role="main">
     <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h3>VIP Customer Management</h3>
-            </div>
-
-
-        </div>
 
         <div class="clearfix"></div>
 
@@ -43,7 +36,7 @@
                                 <!-- First row -->
                                 <div class="col-md-6">
                                     <label class="control-label">First Name<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" autofocus onkeyup="value=value.replace(/[^\a-\z\A-\Z ]/g,'')">
+                                    <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" autofocus oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')">
                                     @if ($errors->has('first_name'))
                                     <span class="" style="color:red">
                                         {{ $errors->first('first_name') }}
@@ -55,7 +48,7 @@
                                 <div class="col-md-6">
                                     <label class="control-label">Last Name<span class="mandatory" style="color:red"> *</span></label>
                                     <input type="text" class="form-control" autofocus
-                                        onkeyup="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter Last Name" name="last_name">
+                                        oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')" placeholder="Enter Last Name" name="last_name">
                                     @if ($errors->has('last_name'))
                                     <span class="" style="color:red">
                                         {{ $errors->first('last_name') }}
@@ -78,7 +71,7 @@
 
                                 <div class="col-md-6">
                                     <label class="control-label">Mobile Number<span class="mandatory" style="color:red"> *</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter Mobile Number" name="mobile_number" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required>
+                                    <input type="text" class="form-control" placeholder="Enter Mobile Number" name="mobile_number" oninput="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" title="Only numbers are allowed" minlength="1                                            " maxlength="12" required>
                                     <!-- <input type="text" class="form-control" placeholder="Enter Mobile Number" name="mobile_number"> -->
                                     @if ($errors->has('mobile_number'))
                                     <span class="" style="color:red">
@@ -146,7 +139,7 @@
                                     </select>
                                     <!-- <input type="text"
                                     class="form-control" placeholder="Enter Country" name="user_country"> -->
-                                    <!-- onkeyup="value=value.replace(/[^\a-\z\A-\Z ]/g,'')"  -->
+                                    <!-- oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')"  -->
                                 </div>
 
                                 <div class="col-md-6">
@@ -170,7 +163,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="control-label">Zip Code</label>
-                                    <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Enter Zip Code" name="user_zipcode">
+                                    <input type="text" oninput="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Enter Zip Code" name="user_zipcode">
                                 </div>
 
                             </div>

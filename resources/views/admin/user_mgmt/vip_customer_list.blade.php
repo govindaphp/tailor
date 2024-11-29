@@ -77,22 +77,7 @@ select#heard12 {
   <div class="">
     <div class="page-title">
       <div class="title_left">
-          <!-- <h3>Customer Management</h3> -->
-        <!-- @if(Session::has('message'))
-          <div class="alert alert-success alert-dismissable">
-              <i class="fa fa-check"></i>
-              <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
-              {{Session::get('message')}}
-          </div>
 
-          @endif
-          @if(Session::has('error'))
-          <div class="alert alert-danger alert-dismissable">
-              <i class="fa fa-check"></i>
-              <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
-              {{Session::get('error')}}
-          </div>
-          @endif -->
       </div>
 
 

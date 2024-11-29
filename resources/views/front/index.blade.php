@@ -670,4 +670,46 @@
             </div>
         </div>
     </div>
+    
+    
+
+    <script>
+       var storedLatitude = "{{ session('latitude') }}";
+    var storedLongitude = "{{ session('longitude') }}";
+
+    if (!storedLatitude || !storedLongitude) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Save location to the server
+                    $.ajax({
+                        url: "{{ route('store.location') }}", // Define this route in Laravel
+                        method: "POST",
+                        data: {
+                            latitude: latitude,
+                            longitude: longitude,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            console.log("Location saved successfully!");
+                        },
+                        error: function(error) {
+                            console.error("Error saving location:", error);
+                        }
+                    });
+                },
+                function(error) {
+                    console.error("Error getting location:", error);
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    } else {
+        console.log("Location already stored:", storedLatitude, storedLongitude);
+    }
+</script>
     @endsection

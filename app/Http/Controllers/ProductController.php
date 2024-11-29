@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\FebricType;
-use App\Models\ColorMaster;
+use App\Models\Color;
 use App\Models\SizeMaster;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;

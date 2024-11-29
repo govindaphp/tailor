@@ -28,14 +28,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
   </head>
   <body>
 
         @include('front.layouts.header')
         
-        <script src="{{ url('/public') }}/front_assets/js/jquery-1.11.0.min.js"></script>
+        <!--script-- src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></!--script-->
+
+        <!--script---- src="{{ url('/public') }}/front_assets/js/jquery-1.11.0.min.js"></script-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         
 

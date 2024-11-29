@@ -180,7 +180,7 @@ select#heard12 {
         });
     </script>
 <script>
-    $('.toggle-class').one("change", function() {
+    $('.toggle-class').on("change", function() {
         var status = $(this).prop('checked') == true ? 1 : 0;
         var id = $(this).data('id');
         $.ajax({

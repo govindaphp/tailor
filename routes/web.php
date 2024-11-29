@@ -4,6 +4,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ManagementController;
 use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\CmsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TailorController;
@@ -52,18 +53,33 @@ Route::get('/', function () {
 
 
 Route::get('/', [HomeController::class, 'index']);
+Route::post('/store-location', [HomeController::class, 'storeLocation'])->name('store.location');
+Route::any('/searchN', [HomeController::class, 'searchHome'])->name('searchHome');
 /*****************************[Fabric seller search]****************************************/
 Route::any('/browseFebrics', [HomeController::class, 'browseFebrics'])->name('browseFebrics');
 Route::any('/febricMarchent', [HomeController::class, 'febricMarchent'])->name('febricMarchent');
-// Tailor ====================================================================================
+/*****************************[Tailor search]****************************************/
 Route::get('/AllTailors', [HomeController::class, 'searchTailor']);
 Route::get('/tailorDetails/{id}', [HomeController::class, 'tailorDetails']);
 
+//demo code route 
+Route::get('/customerProfiles', [HomeController::class, 'customerProfile']);
+Route::get('/productList', [HomeController::class, 'productList']);
+Route::get('/vendorDash', [HomeController::class, 'vendorDash']);
 //Route::get('/AllTailors', [TailorController::class, 'index']);
 //Route::get('/tailorDetails', [TailorController::class, 'tailorDetails']);
 //Route::get('/tailorDetails/{id}', [TailorController::class, 'tailorDetails']);
 
+/****************************[CUSTOMER AUTH START]************************************/
+Route::group(['middleware'=>['web','checkUser']],function(){
+    //Route::get('/customer',[HomeController::class, 'customer']);
+    Route::any('/customerProfile', [CustomerController::class, 'updateProfile']);
+    //Route::post('/profile_update', [CustomerController::class, 'profile_update']);
+    Route::get('/customerDashboard',[CustomerController::class, 'customerDashboard']);
+    
 
+});
+/****************************[CUSTOMER AUTH END]************************************/
 // ===================================================================================================
 
 //admin login
@@ -106,15 +122,15 @@ Route::group(['middleware'=>['web','checkAdmin']],function(){
    Route::get('/admin/tailor-edit/{id}', [ManagementController::class, 'tailor_edit'])->name('admin.tailor_edit');
 
 
-       //fabric seller management
-       Route::get('/admin/fabric-seller-list', [ManagementController::class, 'fabric_seller_list'])->name('admin.fabric_seller_list');
-       Route::get('/admin/fabric-seller-form', [ManagementController::class, 'fabric_seller_form'])->name('admin.fabric_seller_form');
-       Route::post('/admin/fabricSellerAction', [ManagementController::class, 'fabricSellerAction'])->name('admin.fabricSellerAction');
+    //fabric seller management
+    Route::get('/admin/fabric-seller-list', [ManagementController::class, 'fabric_seller_list'])->name('admin.fabric_seller_list');
+    Route::get('/admin/fabric-seller-form', [ManagementController::class, 'fabric_seller_form'])->name('admin.fabric_seller_form');
+    Route::post('/admin/fabricSellerAction', [ManagementController::class, 'fabricSellerAction'])->name('admin.fabricSellerAction');
 
-       //tailor seller management
-       Route::get('/admin/tailor-seller-list', [ManagementController::class, 'tailor_seller_list'])->name('admin.tailor_seller_list');
-       Route::get('/admin/tailor-seller-form', [ManagementController::class, 'tailor_seller_form'])->name('admin.tailor_seller_form');
-       Route::post('/admin/tailorSellerAction', [ManagementController::class, 'tailorSellerAction'])->name('admin.tailorSellerAction');
+    //tailor seller management
+    Route::get('/admin/tailor-seller-list', [ManagementController::class, 'tailor_seller_list'])->name('admin.tailor_seller_list');
+    Route::get('/admin/tailor-seller-form', [ManagementController::class, 'tailor_seller_form'])->name('admin.tailor_seller_form');
+    Route::post('/admin/tailorSellerAction', [ManagementController::class, 'tailorSellerAction'])->name('admin.tailorSellerAction');
 
 
 	/********************[Master Route ]*************************/
@@ -147,30 +163,39 @@ Route::group(['middleware'=>['web','checkAdmin']],function(){
     Route::any('/admin/addCategory/{id?}', [MasterController::class, 'addCategory'])->name('addCategory');
     Route::post('/admin/changeCategoryStatus', [MasterController::class, 'changeCategoryStatus'])->name('changeCategoryStatus');
     Route::get('/admin/deleteCategory/{id}', [MasterController::class, 'deleteCategory'])->name('deleteCategory');
+
+    /********************[CMS Route ]*************************/
+    Route::any('/admin/privacyPolicy', [CmsController::class, 'privacyPolicy'])->name('privacyPolicy');
+    Route::any('/admin/aboutUs', [CmsController::class, 'aboutUs'])->name('aboutUs');
+    Route::any('/admin/termsConditions', [CmsController::class, 'termsConditions'])->name('termsConditions');
 });
 
 
-// User===============================================================================
-
-Route::group(['middleware'=>['web','checkUser']],function(){
-    Route::get('/customer',[HomeController::class, 'customer']);
-    Route::get('/customerProfileSetting', [CustomerController::class, 'ProfileSetting']);
-    Route::post('/profile_update', [CustomerController::class, 'profile_update']);
-
-});
 
 
-// =====================================================================================
+
+
+
+
 
 // Vender===============================================================================
 
+
 Route::group(['middleware'=>['vendor']],function(){
-    Route::get('/vendors',[HomeController::class, 'vendors']);
+    Route::get('/vendorsDasboard',[VendorController::class, 'vendorDashboard']);
     Route::get('/ProfileSetting', [VendorController::class, 'ProfileSetting']);
     Route::post('/profile_update', [VendorController::class, 'profile_update']);
+    Route::get('/vendorProduct',[VendorController::class, 'vendorProduct']);
+    Route::post('/productStatus',[VendorController::class, 'productStatus']);
+    Route::get('/deleteProduct/{id}',[VendorController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::any('/addProduct/{id?}',[VendorController::class, 'addProduct'])->name('addProduct');
+
+
+    
     Route::get('/Products', [ProductController::class, 'Products']);
     Route::get('/createProduct', [ProductController::class, 'createProduct']);
-
+    Route::post('/ProductStore', [ProductController::class, 'ProductStore']);
+    
 
 });
 

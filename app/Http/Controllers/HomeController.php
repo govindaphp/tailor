@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Product;
 use App\Models\DocumentProd;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,14 +18,25 @@ use Hash;
 class HomeController extends Controller{
 
 	public function index(){
-		return view("front/index");
+		
+		$latitude = session('latitude');
+    	$longitude = session('longitude');
+		
+		return view("front/index",compact('latitude', 'longitude'));
+	}
+	public function storeLocation(Request $request)
+	{
+		// Save the location to the session
+		session(['latitude' => $request->latitude, 'longitude' => $request->longitude]);
+
+		return response()->json(['success' => true]);
 	}
 	public function login()
 	{
 		//This function is for login 
 		if (Auth::guard('user')->check()) {
 			// Redirect to the user dashboard if authenticated
-			return redirect()->to('/customer');
+			return redirect()->to('/customerDashboard');
 		}
 		return view("login");
 	}
@@ -41,7 +53,7 @@ class HomeController extends Controller{
 			"password" => $request->password
 		])) 
 		{
-			return redirect()->to('/customer');
+			return redirect()->to('/customerDashboard');
 		}
 		else {
 			// Flash a message and redirect back on failure
@@ -53,7 +65,7 @@ class HomeController extends Controller{
 		//This is for new registeration
 		if (Auth::guard('user')->check()) {
 			// Redirect to the user dashboard if authenticated
-			return redirect()->to('/customer');
+			return redirect()->to('/customerDashboard');
 		}
 		return view("register");
 	}
@@ -86,27 +98,33 @@ class HomeController extends Controller{
 			return redirect()->to('/login');
 		}
 	}
-	public function customer()
-	{
-		if (Auth::guard('user')->check()) {
-			// Redirect to the user dashboard if authenticated
-			return view('front.user.dashboard');
-		}
-		else{
-			return redirect()->to('/login');
-		}
-	}
-	public function vendors()
-	{
-		return view('front.vendor.dashboard');
-	}
+	// public function customer()
+	// {
+	// 	if (Auth::guard('user')->check()) {
+	// 		// Redirect to the user dashboard if authenticated
+	// 		return view('front.user.dashboard');
+	// 	}
+	// 	else{
+	// 		return redirect()->to('/login');
+	// 	}
+	// }
+	// public function vendorsDasboard()
+	// {
+	// 	if (Auth::guard('vendor')->check()) {
+	// 		// Redirect to the user dashboard if authenticated
+	// 		return view('front.vendor.dashboard');
+	// 	}
+	// 	else{
+	// 		return redirect()->to('/login');
+	// 	}
+	// }
 
 	public function vendorLogin(Request $request)
 	{
 		//This function is for login the vendor
 		if (Auth::guard('vendor')->check()) {
 			// Redirect to the vendor dashboard if authenticated
-			return redirect()->to('/vendors');
+			return redirect()->to('/vendorsDasboard');
 		}
 		if ($request->isMethod('post')) {
 		
@@ -115,7 +133,7 @@ class HomeController extends Controller{
 				"password" => $request->password
 			])) 
 			{
-				return redirect()->to('/vendors');
+				return redirect()->to('/vendorsDasboard');
 			}
 			else {
 				// Flash a message and redirect back on failure
@@ -129,7 +147,7 @@ class HomeController extends Controller{
 		//This function is for signup the vendor
 		if (Auth::guard('vendor')->check()) {
 			// Redirect to the vendor dashboard if authenticated
-			return redirect()->to('/vendors');
+			return redirect()->to('/vendorsDasboard');
 		}
 		if ($request->isMethod('post')) {
 			
@@ -185,6 +203,12 @@ class HomeController extends Controller{
         $data['tailor'] = Vendor::where('vendor_id',$id)->first();
 		return view("front/tailordetails",$data);
 	}
+	public function searchHome(Request $request)
+	{
+		//This function is for home page search
+		$latitude = session('latitude');
+    	$longitude = session('longitude');
+	}
 	public function browseFebrics(Request $request)
 	{
 		return view("front/browse_febric");
@@ -193,4 +217,17 @@ class HomeController extends Controller{
 	{
 		return view("front/febric_marchent");
 	}
+	public function customerProfile(Request $request)
+	{
+		return view("front/customer_profile");
+	}
+	public function productList(Request $request)
+	{
+		return view("front/product_list");
+	}
+	public function vendorDash()
+	{
+		return view("front/vendor_dash");
+	}
+	
 }
