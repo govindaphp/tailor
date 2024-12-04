@@ -180,7 +180,7 @@ select#heard12 {
         });
     </script>
 <script>
-    $('.toggle-class').one("change", function() {
+    $('.toggle-class').on("change", function() {
         var status = $(this).prop('checked') == true ? 1 : 0;
         var id = $(this).data('id');
         $.ajax({
@@ -223,36 +223,5 @@ select#heard12 {
         @endif
     });
 </script>
-
-
-
-<!-- <script>
-    $('.toggle-class').on("change", function() {
-        var status = $(this).prop('checked') == true ? 1 : 0;
-        var id = $(this).data('id');
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "<?php echo url('/admin/customer-status'); ?>",
-            data: {
-              _token: '{{ csrf_token() }}',
-                'status': status,
-                'id': id
-            },
-
-            success: function(data) {
-
-                if (data.success) {
-                    toastr.success('status changeed successfully');
-                } else {
-                    toastr.error('Failed to change status');
-
-                }
-            },
-
-        });
-    })
-</script> -->
-
 
 @endsection
