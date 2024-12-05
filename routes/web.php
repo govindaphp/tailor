@@ -57,7 +57,8 @@ Route::post('/store-location', [HomeController::class, 'storeLocation'])->name('
 Route::any('/searchN', [HomeController::class, 'searchHome'])->name('searchHome');
 /*****************************[Fabric seller search]****************************************/
 Route::any('/browseFebrics', [HomeController::class, 'browseFebrics'])->name('browseFebrics');
-Route::any('/febricMarchent', [HomeController::class, 'febricMarchent'])->name('febricMarchent');
+Route::any('/febricMarchent/{id}', [HomeController::class, 'febricMarchent'])->name('febricMarchent');
+Route::any('/productDetail/{id}', [HomeController::class, 'productDetail'])->name('productDetail');
 /*****************************[Tailor search]****************************************/
 Route::get('/AllTailors', [HomeController::class, 'searchTailor']);
 Route::get('/tailorDetails/{id}', [HomeController::class, 'tailorDetails']);
@@ -189,12 +190,7 @@ Route::group(['middleware'=>['vendor']],function(){
     Route::post('/productStatus',[VendorController::class, 'productStatus']);
     Route::get('/deleteProduct/{id}',[VendorController::class, 'deleteProduct'])->name('deleteProduct');
     Route::any('/addProduct/{id?}',[VendorController::class, 'addProduct'])->name('addProduct');
-
-
-    
-    Route::get('/Products', [ProductController::class, 'Products']);
-    Route::get('/createProduct', [ProductController::class, 'createProduct']);
-    Route::post('/ProductStore', [ProductController::class, 'ProductStore']);
+    Route::post('/finalPrice',[VendorController::class, 'finalPrice']);
     
 
 });

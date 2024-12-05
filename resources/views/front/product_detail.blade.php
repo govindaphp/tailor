@@ -13,40 +13,31 @@
         <div class="col-lg-6 product-summary-left">
             <!-- Main Product Image -->
             <div class="main-product-image">
-                <img id="main-product-image" src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design2.png" alt="Main Product" class="" />
+                <img id="main-product-image" src="{{url('public/Productupload',$mainImage->product_image)}}" alt="Main Product" class="" />
             </div>
 
             <!-- Related Product Images -->
             <div class="related-product-images mt-3">
                 <div class="row product-images-inner">
-                    <div class="col-3 one related-product-one">
+                @if(!empty($productImages) && count($productImages) > 0)
+                @foreach($productImages as $index => $image)
+                <div class="col-3 one related-product-one">
                         <a href="javascript:void(0);">
-                            <img src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design1.png" alt="Related Product 1" class="related-product-img" />
+                            <img src="{{url('public/Productupload',$image->product_image)}}" alt="Related Product 1" class="related-product-img" />
                         </a>
-                    </div>
-                    <div class="col-3 one related-product-two">
-                        <a href="javascript:void(0);">
-                            <img src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design3.png" alt="Related Product 2" class="related-product-img" />
-                        </a>
-                    </div>
-                    <div class="col-3 one related-product-three">
-                        <a href="javascript:void(0);">
-                            <img src="https://votivelaravel.in/tailor_hub/public/front_assets/images/tailor1.png" alt="Related Product 3" class="related-product-img" />
-                        </a>
-                    </div>
-                    <div class="col-3 one related-product-four">
-                        <a href="javascript:void(0);">
-                            <img src="https://votivelaravel.in/tailor_hub/public/front_assets/images/category1.png" alt="Related Product 4" class="related-product-img" />
-                        </a>
-                    </div>
+                </div>
+                @endforeach
+                @else
+                <p>No Images On Galary</p>
+                @endif
                 </div>
             </div>
         </div>
 
         <div class="col-lg-6 product-summary-right">
-            <h1 class="product_title entry-title">Printed Green Shirt</h1>
-            <p class="price"><span>$34.00</span>$32.00</p>
-            <p class="dolor-text">Neque porro quisquam est, qui dolore ipsum quia dolor sit amet, consectetur adipisci velit, sed quia non incidunt lores ta porro ame. numquam eius modi tempora incidunt lores ta porro ame.</p>
+            <h1 class="product_title entry-title">{{$product->product_name}}</h1>
+            <p class="price"><span>{{$product->product_price}}</span>{{$product->final_price}}</p>
+            <p class="dolor-text">{{$product->product_details}}</p>
 
             <div class="quantity">
                 <div class="quantity-inner">
@@ -59,7 +50,7 @@
                 </div>
             </div>
 
-            <p class="product-meta"><span>Category:</span>Tshirts</p>
+            <p class="product-meta"><span>Category:</span>{{@$categoryName->category_name}}</p>
             <h6>Free shipping on orders over $50!</h6>
             <ul class="refunds-text">
                 <li><i class="fa fa-check-circle"></i>No-Risk Money Back Guarantee!</li>
@@ -74,86 +65,33 @@
         <h1 class="inner-detail-pdc">Related Products</h1>
    <img src="https://votivelaravel.in/tailor_hub/public/front_assets/images/Line.png">
         <div class="row related-products">
-            <!-- Product 1 -->
-            <div class="col-md-3 col-sm-6 product-item">
+        @if(!empty($relatedCategory) && count($relatedCategory) > 0)
+        @foreach($relatedCategory as $index => $value)
+        <div class="col-md-3 col-sm-6 product-item">
                 <div class="product-wrap">
                     <div class="product-img img-zoom">
                         <a href="">
-                            <img class="img-fluid w-100" src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design2.png" alt="" />
+                            <img class="img-fluid w-100" src="{{url('public/Productupload',$value->product_image)}}" alt="" />
                         </a>
                     </div>
                     <div class="product-content text-center">
-                        <h3><a href="">Angel Boutique</a></h3>
+                     <span class="review-rating">★★★★★</span>
+
+                        <h3><a href="">{{$value->product_name}}</a></h3>
                         <div class="product-price">
-                            <span>$60.99</span>
+                            <span>{{$value->final_price}}</span>
                                                 
 
                         </div>
-                        <span class="review-rating">★★★★★</span>
                     </div>
                 </div>
-            </div>
+        </div>
+        @endforeach
+        @else
+        <p>No products available blogs this category</p>
+        @endif
 
-            <!-- Product 2 -->
-            <div class="col-md-3 col-sm-6 product-item">
-                <div class="product-wrap">
-                    <div class="product-img img-zoom">
-                        <a href="">
-                            <img class="img-fluid w-100" src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design1.png" alt="" />
-                        </a>
-                    </div>
-                    <div class="product-content text-center">
-                        <h3><a href="">Angel Boutique</a></h3>
-                        <div class="product-price">
-                            <span>$60.99</span>
-                                               
 
-                        </div>
-
-                         <span class="review-rating">★★★★★</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-md-3 col-sm-6 product-item">
-                <div class="product-wrap">
-                    <div class="product-img img-zoom">
-                        <a href="">
-                            <img class="img-fluid w-100" src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design2.png" alt="" />
-                        </a>
-                    </div>
-                    <div class="product-content text-center">
-                        <h3><a href="">Angel Boutique</a></h3>
-                        <div class="product-price">
-                            <span>$60.99</span>
-                                                
-                        </div>
-                        <span class="review-rating">★★★★★</span>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-md-3 col-sm-6 product-item">
-                <div class="product-wrap">
-                    <div class="product-img img-zoom">
-                        <a href="">
-                            <img class="img-fluid w-100" src="https://votivelaravel.in/tailor_hub/public/front_assets/images/design3.png" alt="" />
-                        </a>
-                    </div>
-                    <div class="product-content text-center">
-                        <h3><a href="">Angel Boutique</a></h3>
-                        <div class="product-price">
-                            <span>$60.99</span>
-
-                        </div>
-                         <span class="review-rating">★★★★★</span>
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -161,14 +99,15 @@
    <div class="row reviews-details">
         <div class="reviews-point">
             <h2>Customer Reviews</h2>
-         
+
             <div class="review">
                 <div class="review-header">
                     <strong>John Doe</strong>
                     <span class="review-rating">★★★★★</span>
                 </div>
                 <p class="review-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+
+</p>
             </div>
 
             <div class="review">
@@ -178,7 +117,7 @@
                 </div>
                 <p class="review-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
 
-                </p>
+</p>
             </div>
 
             <a href="#" class="see-all-reviews-btn">See All Reviews</a>

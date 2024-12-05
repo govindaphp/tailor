@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\FebricType;
+use App\Models\ProductImage;
 use App\Models\DocumentProd;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -202,11 +205,23 @@ class HomeController extends Controller{
 	/*********************Master Pages**************************/
 	public function browseFebrics(Request $request)
 	{
-		return view("front/browse_febric");
+		$data['FebricTypes'] = FebricType::where('is_active','1')->get();
+		return view("front/browse_febric",$data);
 	}
-	public function febricMarchent(Request $request)
+	public function productDetail($id)
 	{
-		return view("front/febric_marchent");
+		$data['category']		= Product::where('id',$id)->first();
+		$data['categoryName']	= Category::where('category_id',$data['category']->category_id)->first();
+		$data['relatedCategory']= Product::where('category_id',$data['category']->category_id)->get();
+		$data['product'] 		= Product::where('id',$id)->first();
+		$data['productImages'] 	= ProductImage::where('product_id',$id)->get();
+		$data['mainImage'] 		= $data['productImages']->first();
+		return view("front/product_detail",$data);
+	}	
+	public function febricMarchent($id)
+	{
+		$data['fabric_products'] = Product::where('febric_type_id',$id)->get();
+		return view("front/febric_marchent",$data);
 	}
 	public function customerProfile(Request $request)
 	{

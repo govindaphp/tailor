@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\FebricType;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
@@ -135,6 +136,9 @@ class VendorController extends Controller
 		//This function is for add product
 		$category           = $request->category_id;
         $product_name       = $request->name;
+		$product_image	= $request->product_image;
+		$old_product_image = $request->old_product_image;
+		$fab_type			= $request->fab_type;
         $galary_img         = $request->galary_img;
 		$old_image          = $request->old_image;
         $product_type       = $request->product_type;
@@ -142,7 +146,8 @@ class VendorController extends Controller
         $gender_type        = $request->gender_type;
         $product_details    = $request->product_detail;
 		$price   			= $request->price;
-		$discount			= $request->discounted_price;
+		$discount			= $request->discount;
+		$finalPrice			= $request->finalPrice;
 		$sizes              = $request->sizes;
 		$vendor_id			= auth('vendor')->id();
 
@@ -158,17 +163,28 @@ class VendorController extends Controller
 		if ($request->isMethod('post')) {
 			if($request->product_id){
 
+				if($product_image){
+					$imageName = uniqid().'.'.$product_image->extension();
+					$product_image->move(public_path('Productupload'), $imageName);
+				}else{
+					$imageName = $old_product_image;
+				}
+
 				$productUpdate = Product::where('id', $request->product_id)->first();
 				$productUpdate->category_id     = $category;
 				$productUpdate->product_name    = $product_name;
 				$productUpdate->product_details = $product_details;
+				$productUpdate->product_image	= $imageName;
 				$productUpdate->product_type    = $product_type;
 				$productUpdate->gender_type     = $gender_type;
-				$productUpdate->final_price 	 = $price;
+				$productUpdate->febric_type_id  = $fab_type;
+				$productUpdate->product_price	= $price;
+				$productUpdate->discount		= $discount;
+				$productUpdate->final_price 	= $finalPrice;
 				$productUpdate->is_available    = '1';
 				$productUpdate->is_available    = '1';
 				$productUpdate->is_deleted      = '0';
-				$productUpdate->vendor_id 		 = $vendor_id;
+				$productUpdate->vendor_id 		= $vendor_id;
 				$productUpdate->save();
 
 				// //Galary image Update code =========================================================================================
@@ -214,13 +230,23 @@ class VendorController extends Controller
 
 			}else{
 
+				if($product_image){
+					$imageName = uniqid().'.'.$product_image->extension();
+					$product_image->move(public_path('Productupload'), $imageName);
+				}
+
+
 				$newProduct                  = new Product();
 				$newProduct->category_id     = $category;
 				$newProduct->product_name    = $product_name;
 				$newProduct->product_details = $product_details;
+				$newProduct->product_image	 = $imageName;
 				$newProduct->product_type    = $product_type;
 				$newProduct->gender_type     = $gender_type;
-				$newProduct->final_price 	 = $price;
+				$newProduct->febric_type_id  = $fab_type;
+				$newProduct->product_price	 = $price; 
+				$newProduct->discount		 = $discount; 
+				$newProduct->final_price 	 = $finalPrice;
 				$newProduct->is_available    = '1';
 				$newProduct->is_available    = '1';
 				$newProduct->is_deleted      = '0';
@@ -269,8 +295,15 @@ class VendorController extends Controller
 		$data['category'] = DB::table('category')->select('category_id','category_name')->where('is_active',1)->where('is_deleted',0)->get();
 		$data['colors'] = DB::table('color_master')->select('color_id','color_name','color_code')->where('is_active',1)->where('is_deleted',0)->get();
 		$data['sizes'] = DB::table('size_master')->select('id','size_name')->where('is_active',1)->where('is_deleted',0)->get();
-
+		$data['febricTypes'] = DB::table('febric_type_master')->select('febric_type_id','febric_type_name')->where('is_active',1)->where('is_deleted',0)->get();
 		return view('front.vendor.add_product',$data);
+	}
+
+	public function finalPrice(Request $request){
+		$price = $request->input('price');
+		$discount = $request->input('discount');
+		$finalPrice = $price - ($price * ($discount / 100));
+		return response()->json(['final_price' => round($finalPrice, 2)]);
 	}
 
 }

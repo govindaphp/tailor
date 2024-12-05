@@ -10,7 +10,7 @@
 <div class="banner-tailors">
    <div class="container browse-tailors">
       <div class="row browse-content">
-         <h1 class="text-white">Profile</h1>
+         <h1 class="text-white">Product Create-Update</h1>
       </div>
    </div>
 </div>
@@ -53,6 +53,20 @@
                         </div>
                         <div class="col-md-12">
                            <div class="form-group">
+                           <label for="exampleInputEmail1">Product Image</label>
+                           <div class="input-group">
+                              @if(!empty($product->product_image))
+                              <img src="{{url('public/Productupload',@$product->product_image)}}" height="50px" width="50px">
+                              <input type="file"  name="product_image" class="form-control">
+                              <input type="hidden" name="old_product_image" value="{{@$product->product_image}}">
+                              @else
+                              <input type="file"  name="product_image" class="form-control">
+                              @endif
+                           </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="form-group">
                               <label for="exampleInputEmail1">Product Galary Images</label>
                               <div id="dynamic_field">
                                     @if(!empty($productImages) && count($productImages) > 0)
@@ -84,6 +98,17 @@
                               </select>
                            </div>
                         </div>
+                        <div class="col-md-6" id="fav_type_container" >
+                           <div class="form-group">
+                              <label for="exampleSelectGender">Fabric Type</label>
+                              <select class="form-select" name="fab_type" id="product_type" required>
+                                 <option value="">Choose fabric Type</option>
+                                 @foreach($febricTypes as $type)
+                                 <option value="{{$type->febric_type_id}}" {{@$product->febric_type_id == $type->febric_type_id ? 'selected' :''}}>{{$type->febric_type_name}}</option>
+                                 @endforeach
+                              </select>
+                           </div>
+                        </div>
                         <div class="col-md-6">
                            <div class="form-group">
                               <label for="exampleInputName2">Wear</label>
@@ -97,24 +122,50 @@
                         <div class="col-md-6">
                            <div class="form-group">
                               <label for="exampleInputEmail3">Price</label>
-                              <input type="text" class="form-control" name="price" id="exampleInputEmail3" placeholder="Price" value="{{@$product->final_price}}" required/>
+                              <input type="text" class="form-control" name="price" id="priceInput" placeholder="Price" value="{{@$product->product_price}}"  required onchange="updateFinalPrice()" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
                            </div>
                         </div>
                         <div class="col-md-6">
                            <div class="form-group">
                               <label for="exampleInputName2">Discount(%)</label>
-                              <input type="text" class="form-control" name="discount" id="exampleInputName2" placeholder="Discount(%)" value="" />
+                              <input type="text" class="form-control" name="discount" id="discountInput" placeholder="Discount(%)" value="{{ $product->discount ?? 0 }}" onchange="updateFinalPrice()" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
                            </div>
                         </div>
                         <div class="col-md-6">
                            <div class="form-group">
                               <label for="exampleInputName2">Discounted Price</label>
-                              <input type="text" class="form-control" name="discounted_price" id="exampleInputName2" placeholder="Discounted Price" value="" readonly/>
+                              <input type="text" class="form-control" name="finalPrice" id="finalPrice" placeholder="Discounted Price" value="{{@$product->final_price}}" readonly/>
                            </div>
                         </div>
                         <div id="cls">
                         @if(!empty($ProductVariants))
-
+                        <div class="row">
+                              <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label for="exampleSelectGender">Size</label>
+                                    <select  name="sizes[]" class="form-select" >
+                                       <option value="">Select Type</option>
+                                       @foreach ($sizes as $value)
+                                       <option value="{{ $value->id }}">{{ $value->size_name }}</option>
+                                       @endforeach
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="col-md-5">
+                                 <div class="form-group">
+                                    <label for="exampleSelectGender">Color</label>
+                                    <select  name="colors[{{ 0 }}][]" class="form-select exampleInputColor" multiple="multiple">
+                                       <option value="" disabled>Select Color</option>
+                                       @foreach ($colors as $value)
+                                       <option value="{{ $value->color_id }}">{{ $value->color_name }}</option>
+                                       @endforeach
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="col-md-1">
+                                 <div class="btn btn-outline-success plus" id="add" data-counter="{{ count($ProductVariants) ?? 0 }}">+</div>
+                              </div>
+                        </div>
                         @foreach($ProductVariants as $index => $variants)
                         @php
                            $size_id = [];
@@ -127,7 +178,7 @@
                               $colors_id[] = $variant->colour_id;
                            @endphp
                         @endforeach
-
+                        
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-group">
@@ -164,35 +215,6 @@
                            </div>
                         </div>
                      @endforeach
-
-
-                        <div class="row">
-                              <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label for="exampleSelectGender">Size</label>
-                                    <select  name="sizes[]" class="form-select" >
-                                       <option value="">Select Type</option>
-                                       @foreach ($sizes as $value)
-                                       <option value="{{ $value->id }}">{{ $value->size_name }}</option>
-                                       @endforeach
-                                    </select>
-                                 </div>
-                              </div>
-                              <div class="col-md-5">
-                                 <div class="form-group">
-                                    <label for="exampleSelectGender">Color</label>
-                                    <select  name="colors[{{ 0 }}][]" class="form-select exampleInputColor" multiple="multiple">
-                                       <option value="" disabled>Select Color</option>
-                                       @foreach ($colors as $value)
-                                       <option value="{{ $value->color_id }}">{{ $value->color_name }}</option>
-                                       @endforeach
-                                    </select>
-                                 </div>
-                              </div>
-                              <div class="col-md-1">
-                                 <div class="btn btn-outline-success plus" id="add" data-counter="{{ count($ProductVariants) ?? 0 }}">+</div>
-                              </div>
-                           </div>
                         @else
                         <div class="row">
                               <div class="col-md-6">
@@ -237,6 +259,33 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+// discount code ============================================================================
+
+
+function updateFinalPrice() {
+   const price = $('#priceInput').val();
+   const discount = $('#discountInput').val();
+
+   $.ajax({
+            url: '{{ url("finalPrice") }}', // Define this route in web.php
+            type: 'POST',
+            data: {
+                price: price,
+                discount: discount,
+                _token: '{{ csrf_token() }}' // Add CSRF token for security
+            },
+            success: function(response) {
+                $('#finalPrice').val(response.final_price);
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText); // Handle errors
+            }
+   });
+}
+
+
+
+
 // Add more images code ============================================================================
 
 let loop = parseInt($('#add').data('counter'), 10);

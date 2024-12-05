@@ -1,32 +1,32 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
-    <li class="nav-item active">
+    <li class="nav-item {{ Request::is('vendorsDasboard') ? 'active' : '' }}">
       <a class="nav-link" href="{{url('vendorsDasboard')}}">
         <i class="fa fa-th" aria-hidden="true"></i>
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('ProfileSetting') ? 'active' : '' }}">
       <a class="nav-link" href="{{url('ProfileSetting')}}" >
         <i class="fa fa-user"></i>
         <span class="menu-title">My Profile</span>
         <i class="menu-arrow"></i>
       </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#tables-menu" aria-expanded="false" aria-controls="tables-menu">
+    <li class="nav-item {{ Request::is('addProduct/*') || Request::is('vendorProduct') ? 'active' : '' }}">
+        <a class="nav-link" data-bs-toggle="collapse" href="#tables-menu" aria-expanded="{{ Request::is('addProduct') || Request::is('vendorProduct') ? 'true' : 'false' }}" aria-controls="tables-menu">
             <i class="fas fa-tshirt" aria-hidden="true"></i>
             <span class="menu-title">Products</span>
             <i class="menu-arrow fa fa-chevron-down"></i>
         </a>
         <!-- Dropdown items -->
-        <div class="collapse" id="tables-menu">
+        <div class="collapse {{ Request::is('addProduct/*') || Request::is('vendorProduct') ? 'show' : '' }}" id="tables-menu">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{'addProduct'}}">Add Product</a>
+                <li class="nav-item ">
+                    <a class="nav-link {{ Request::is('addProduct/*') ? 'active' : '' }}" href="{{'addProduct'}}">Add Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('vendorProduct')}}">View Product</a>
+                    <a class="nav-link {{ Request::is('vendorProduct') ? 'active' : '' }}" href="{{url('vendorProduct')}}">View Product</a>
                 </li>
             </ul>
         </div>

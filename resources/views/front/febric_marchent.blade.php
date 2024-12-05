@@ -28,11 +28,13 @@
                             </div>
                             <div class="padding-54-row-col">
                                 <div class="row">
+                                    @foreach($fabric_products as $key => $value)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                                         <div class="product-wrap">
                                             <div class="product-img img-zoom">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
+                                                <a href="{{url('/productDetail ,$value->id')}}">
+                                                   
+                                                <img class="img-fluid w-100" src="{{url('public/Productupload',$value->product_image)}}" alt="myimage">
                                                 </a>
                                                 <div class="product-action-wrap">
                                                     <button title="View" class="viewatc">VIEW</button>
@@ -40,146 +42,16 @@
                                                 </div>
                                             </div>
                                             <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
+                                                <h3><a href="{{url('/productDetail',$value->id)}}">{{$value->product_name}}</a></h3>
                                                 <div class="product-price">
-                                                    <span>$60.99</span>
+                                                    <span>{{$value->final_price}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom ">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom ">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom ">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                                        <div class="product-wrap">
-                                            <div class="product-img img-zoom ">
-                                                <a href="">
-                                                    <img class="img-fluid w-100" src="{{ url('/public') }}/front_assets/images/ankara.jpg" alt="">
-                                                </a>
-                                                <div class="product-action-wrap">
-                                                    <button title="View" class="viewatc">VIEW</button>
-                                                    <button title="Add To Cart" class="addcart">ADD TO CART</button>         
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h3><a href="#">Angel Boutique</a></h3>
-                                                <div class="product-price">
-                                                    <span>$60.99</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>     
+                                    @endforeach
+
+     
                                 </div>
                             </div>
                             <div class="pagination-style text-center mt-30">
