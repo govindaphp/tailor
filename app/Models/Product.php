@@ -11,4 +11,10 @@ class Product extends Model
 
     protected $table = "products";
     protected $primaryKey = 'id';
+
+public function vendor()
+{
+    return $this->belongsTo(Vendor::class, 'vendor_id', 'vendor_id');
+}
+
 }

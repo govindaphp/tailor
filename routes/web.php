@@ -11,6 +11,10 @@ use App\Http\Controllers\TailorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerCartController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MerchentChatController;
+use App\Http\Controllers\Admin\SupportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +25,7 @@ use App\Http\Controllers\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 /**********************[ WEB SITE ROUTING START ]****************************/
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
@@ -36,13 +41,13 @@ Route::get('/newregister',[HomeController::class, 'newregister']);
 
 Route::post('/loginchk', [HomeController::class, 'loginchk'])->name('customerlogin');
 Route::any('/logout',[HomeController::class, 'logout']);
-// Route::get('/customer',[HomeController::class, 'customer']);
+
 Route::post('/signup',[HomeController::class, 'signup'])->name('signup');
 
 Route::any('/vendorLogin', [HomeController::class, 'vendorLogin'])->name('vendorLoginForm');
 Route::any('/vendorSignup', [HomeController::class, 'vendorSignup'])->name('vendorSignupForm');
 
-// Route::get('/vendors',[HomeController::class, 'vendors']);
+
 
 /**********************[ WEB SITE ROUTING END ]****************************/
 
@@ -53,33 +58,105 @@ Route::get('/', function () {
 
 
 Route::get('/', [HomeController::class, 'index']);
+
+/*****************************[Store Current Location]****************************************/
 Route::post('/store-location', [HomeController::class, 'storeLocation'])->name('store.location');
 Route::any('/searchN', [HomeController::class, 'searchHome'])->name('searchHome');
 /*****************************[Fabric seller search]****************************************/
 Route::any('/browseFebrics', [HomeController::class, 'browseFebrics'])->name('browseFebrics');
-Route::any('/febricMarchent', [HomeController::class, 'febricMarchent'])->name('febricMarchent');
+Route::any('/febricMarchent/{id}', [HomeController::class, 'febricMarchent'])->name('febricMarchent');
+Route::any('/productDetail/{id}', [HomeController::class, 'productDetail'])->name('productDetail');
+
+Route::any('/exploreProducts', [ProductController::class, 'exploreProducts'])->name('exploreProducts');  //Erdev
+Route::any('/productMarchent/{category_id}', [ProductController::class, 'machentByCategoryId'])->name('product.MachentByCategoryId'); //ErDev
+
 /*****************************[Tailor search]****************************************/
 Route::get('/AllTailors', [HomeController::class, 'searchTailor']);
 Route::get('/tailorDetails/{id}', [HomeController::class, 'tailorDetails']);
+Route::post('/likeVendor', [HomeController::class, 'likeVendor']);
+Route::get('/tailorCatalogue/{id}/{category_id?}', [HomeController::class, 'tailorCatalogue']);
+
+/*****************************[Catalogue Tailor  search]****************************************/
+Route::any('/exploredesign', [HomeController::class, 'exploredesign'])->name('exploredesign');
+Route::any('/tailor_design/{id}', [HomeController::class, 'tailor_design'])->name('tailor_design');
+Route::any('/catalogueDetail/{id}', [HomeController::class, 'catalogueDetail'])->name('catalogueDetail');
+Route::post('/saveDesignId', [CustomerCartController::class, 'saveDesignId'])->name('saveDesignId');
+/*****************************[Catalogue Add To Cart]****************************************/
 
 //demo code route 
-Route::get('/customerProfiles', [HomeController::class, 'customerProfile']);
+//Route::get('/customerProfiles', [HomeController::class, 'customerProfile']);
 Route::get('/productList', [HomeController::class, 'productList']);
 Route::get('/vendorDash', [HomeController::class, 'vendorDash']);
+Route::get('/wishlist', [HomeController::class, 'wishlist']);
+
+
 //Route::get('/AllTailors', [TailorController::class, 'index']);
 //Route::get('/tailorDetails', [TailorController::class, 'tailorDetails']);
 //Route::get('/tailorDetails/{id}', [TailorController::class, 'tailorDetails']);
 
 /****************************[CUSTOMER AUTH START]************************************/
 Route::group(['middleware'=>['web','checkUser']],function(){
-    //Route::get('/customer',[HomeController::class, 'customer']);
     Route::any('/customerProfile', [CustomerController::class, 'updateProfile']);
-    //Route::post('/profile_update', [CustomerController::class, 'profile_update']);
-    Route::get('/customerDashboard',[CustomerController::class, 'customerDashboard']);
-    
+    Route::post('/profile_update', [CustomerController::class, 'profile_update']);
+	Route::get('/customerDashboard',[CustomerController::class, 'customerDashboard']);
 
+    Route::get('/customerWishlist', [CustomerController::class, 'customerWishList'])->name('customer.wishList'); //Erdev
+    Route::post('/cart/add', [CustomerCartController::class, 'productAddToCart'])->name('customer.productAddToCart');  //Erdev
+
+    Route::any('/addShipping/{id?}',[CustomerController::class, 'addShipping'])->name('addShipping');
+    //Route::any('/viewAddress',[CustomerController::class, 'viewShippingAddress']);
+    Route::any('/shippingAddress',[CustomerController::class, 'shippingAddressList']);
+    Route::post('/defaultAddress',[CustomerController::class, 'defaultAddress']);
+    Route::post('/addressStatus',[CustomerController::class, 'addressStatus'])->name('addressStatus');
+    Route::get('/deleteAddress/{id}',[CustomerController::class, 'deleteAddress'])->name('deleteAddress');
+
+    Route::any('/createTicket',[CustomerController::class,'createTicket'])->name('createTicket');
+    Route::get('/ticketList', [CustomerController::class, 'supportTicketList']);    
+    Route::any('/ticketReply/{id}', [CustomerController::class, 'replySupportTicket'])->name('ticketReply');    
+
+    Route::any('/mesurment/{id?}', [CustomerController::class, 'mesurment']);
+    Route::get('/viewMeasurment', [CustomerController::class, 'measurmentList']);
+    Route::get('/deleteMeasurment/{id}', [CustomerController::class, 'deleteMeasurment']);
+
+    /***********************[CHATTING ROUTE START]********************************/
+    Route::get('/message',[ChatController::class, 'message']);
+    Route::post('/getMerchent',[ChatController::class, 'getMerchent']);
+    Route::post('/userMessageSubmit',[ChatController::class, 'userMessageSubmit']);
+    /***********************[CHATTING ROUTE END]*********************************/
 });
 /****************************[CUSTOMER AUTH END]************************************/
+
+/****************************[VENDOR AUTH START]************************************/
+Route::group(['middleware'=>['vendor']],function(){
+    Route::get('/vendorsDasboard',[VendorController::class, 'vendorDashboard']);
+   // Route::get('/ProfileSetting', [VendorController::class, 'ProfileSetting']);
+    //Route::post('/profile_update', [VendorController::class, 'profile_update']);
+
+    Route::any('/updateProfile', [VendorController::class, 'updateProfile']);
+
+    Route::get('/vendorProduct',[VendorController::class, 'vendorProduct']);
+    Route::post('/productStatus',[VendorController::class, 'productStatus']);
+    Route::get('/deleteProduct/{id}',[VendorController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::any('/addProduct/{id?}',[VendorController::class, 'addProduct'])->name('addProduct');
+    Route::post('/finalPrice',[VendorController::class, 'finalPrice']);
+
+
+    // Tailor section =============================================================================================
+
+    Route::any('/addCatalogue/{id?}',[VendorController::class, 'addCatalogue']);
+    Route::get('/Catalogue',[VendorController::class, 'Catalogue']);
+    Route::post('/catalogueStatus',[VendorController::class, 'catalogueStatus']);
+
+    Route::any('/addDocument/{id?}',[VendorController::class, 'addDocument']);
+    Route::get('/deleteDoc/{id}',[VendorController::class, 'deleteDoc'])->name('deleteDoc');
+
+    /*****************************[VENDOR CHAT ROUTE START]**********************************/
+    Route::get('/vendorMessages',[MerchentChatController::class, 'vendorMessages']);
+    Route::post('/getUser',[MerchentChatController::class, 'getUser']);
+    Route::post('/merchentMessageSubmit',[MerchentChatController::class, 'merchentMessageSubmit']);
+    /*****************************[VENDOR CHAT ROUTE END]***********************************/
+});
+/****************************[VENDOR AUTH END]*************************************/
 // ===================================================================================================
 
 //admin login
@@ -168,36 +245,24 @@ Route::group(['middleware'=>['web','checkAdmin']],function(){
     Route::any('/admin/privacyPolicy', [CmsController::class, 'privacyPolicy'])->name('privacyPolicy');
     Route::any('/admin/aboutUs', [CmsController::class, 'aboutUs'])->name('aboutUs');
     Route::any('/admin/termsConditions', [CmsController::class, 'termsConditions'])->name('termsConditions');
+    
+    /********************[Vendor Document Route ]*************************/
+    Route::any('/admin/listDocument', [CmsController::class, 'listDocument'])->name('listDocument');
+    Route::get('/admin/deleteDocument/{id}', [CmsController::class, 'deleteDocument'])->name('deleteDocument');
+    Route::post('/admin/documentStatus',[CmsController::class,'documentStatus'])->name('documentStatus');
+
+    /********************[Support Route ]*************************/
+    Route::get('/admin/getTicket', [SupportController::class, 'getTicket']);    
+    Route::any('/admin/replyTicket/{id}', [SupportController::class, 'replyTicket'])->name('replyTicket');    
+    Route::post('/admin/closeTicket', [SupportController::class, 'closeTicket']);    
 });
-
-
-
-
-
-
 
 
 
 // Vender===============================================================================
 
 
-Route::group(['middleware'=>['vendor']],function(){
-    Route::get('/vendorsDasboard',[VendorController::class, 'vendorDashboard']);
-    Route::get('/ProfileSetting', [VendorController::class, 'ProfileSetting']);
-    Route::post('/profile_update', [VendorController::class, 'profile_update']);
-    Route::get('/vendorProduct',[VendorController::class, 'vendorProduct']);
-    Route::post('/productStatus',[VendorController::class, 'productStatus']);
-    Route::get('/deleteProduct/{id}',[VendorController::class, 'deleteProduct'])->name('deleteProduct');
-    Route::any('/addProduct/{id?}',[VendorController::class, 'addProduct'])->name('addProduct');
 
-
-    
-    Route::get('/Products', [ProductController::class, 'Products']);
-    Route::get('/createProduct', [ProductController::class, 'createProduct']);
-    Route::post('/ProductStore', [ProductController::class, 'ProductStore']);
-    
-
-});
 
 // =====================================================================================
 

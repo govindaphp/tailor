@@ -58,7 +58,7 @@
                       <li><a href="{{ route('admin.tailor_list') }}">Tailor Management</a></li>
                       <li><a href="form.html">Fabric Seller Management</a></li>
                       <li><a href="form.html">Tailor and Fabric Seller Management</a></li>
-
+                      <li><a href="{{ route('listDocument') }}">Documents</a></li>
                     </ul>
                 </li>
 
@@ -69,6 +69,9 @@
                   <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
                   <li><a href="{{ route('termsConditions') }}">Terms & Conditions</a></li>
                 </ul>
+              </li>
+              <li>
+                <a href="{{url('/admin/getTicket')}}"><i class="fa fa-support" ></i> Customer Support </a>
               </li>
             </ul>
 

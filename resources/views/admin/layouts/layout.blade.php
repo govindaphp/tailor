@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
+
   <title>@yield('title', 'Admin | Dashboard')</title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <script src="{{ url('/') }}/public/admin/assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -32,6 +33,9 @@
     <link href="{{ url('/') }}/public/admin/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="{{ url('/') }}/public/admin/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+
+
     <!-- Datatables -->
 
     <link href="{{ url('/') }}/public/admin/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -42,6 +46,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ url('/') }}/public/admin/assets/build/css/custom.min.css" rel="stylesheet">
+
+       <link href="{{ url('/') }}/public/admin/assets/build/css/ticket.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -62,7 +68,7 @@
       @include('admin.layouts.header')
         @include('admin.layouts.sidebar')
         @yield('admin-content')
-
+        
 
 
 

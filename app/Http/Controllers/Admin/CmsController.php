@@ -131,4 +131,91 @@ class CmsController extends Controller
         }
         return view('admin.cms.terms_conditions',compact('terms'));
     }
+    /**********************************[ VENDOR DOCUMENT START ]**********************************/
+    public function listDocument(Request $request)
+    {
+        //This function is for vendor document list
+
+        $query = DB::table('documents')
+                    ->join('vendors', 'documents.vendor_id', '=', 'vendors.vendor_id')
+                    ->where('documents.is_deleted', '0')
+                    ->select('documents.*', 'vendors.name', 'vendors.last_name', 'vendors.mobile_no');
+
+        
+            
+        if ($request->input('action') === 'reset') 
+        {
+            return redirect()->route('listDocument');
+        } 
+        elseif ($request->input('action') === 'search' || $request->has('page')) 
+        {
+            
+            $first_name     = $request->first_name;
+            $mobile_number  = $request->mobile_number;
+            $doc_name       = $request->doc_name;
+            $doc_status     = $request->doc_status;
+
+            if (!empty($first_name)) {
+                $query->where(function ($q) use ($first_name) {
+                    $q->where('vendors.name', 'like', '%' . $first_name . '%')
+                      ->orWhere('vendors.last_name', 'like', '%' . $first_name . '%')
+                      ->orWhere('vendors.username', 'like', '%' . $first_name . '%');
+                });
+                
+            }
+    
+            if (!empty($mobile_number)) {
+                $query->where('vendors.mobile_no', 'like', '%' . $mobile_number . '%');
+            }
+    
+            if (!empty($doc_name)) {
+                $query->where('documents.doc_name', 'like', '%' . $doc_name . '%');
+            }
+    
+            if ($doc_status!=3) {
+                $query->where('documents.verification_status', '=', $doc_status);
+            }
+        }
+        
+        $document = $query->orderBy('documents.id', 'desc')->paginate(10);
+       /* $document = DB::table('documents')
+						->join('vendors', 'documents.vendor_id', '=', 'vendors.vendor_id')
+                        ->where('documents.is_deleted', '0')
+						->select('documents.*', 'vendors.name','vendors.last_name','vendors.mobile_no')
+                        ->orderBy('documents.id', 'desc')
+						->get();*/
+                     
+                    
+        return view('admin.cms.document_list',compact('document'));
+    }
+    public function deleteDocument($id)
+    {
+        $result = DB::table('documents')
+            ->where('id', $id)
+            ->update(['is_deleted' => 1]);
+
+        if ($result > 0) {
+            // Successfully updated at least one row
+            Session::flash('message', 'Document deleted successfully!');
+        } else {
+            // No rows updated
+            Session::flash('message', 'Failed to delete Document or already deleted.');
+        }
+
+        return redirect()->to('/admin/listDocument');
+    }
+    public function documentStatus(Request $request)
+    {
+        $result =  DB::table('documents')
+                ->where('id', $request->id)
+                ->update(
+                    ['verification_status' => $request->status]
+                );
+        if ($result){
+            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+        } else{
+            return response()->json(['success' => false, 'message' => 'Failed to update status']);
+        }
+    }
+    /**********************************[ VENDOR DOCUMENT END ]**********************************/
 }

@@ -1,5 +1,12 @@
 @extends('front.layouts.layout') @section('content')
-
+<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" /-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        padding: 1px 25px !important;
+    padding-right: 10px !important;
+}
+    </style>
 <div class="banner-tailors">
 <div class="container browse-tailors">
   <div class="row browse-content">
@@ -18,9 +25,10 @@
                     <div class="col-md-9 grid-margin stretch-card customer-profile-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Profile Updatesddfgdg</h4>
-                                <p class="card-description">Basic Details</p>
-                                <form class="profile-input-form customer-profile-form" action="{{ url('/profile_update') }}" id="profile_form" enctype="multipart/form-data" method="POST">
+                                <h4 class="card-title">Profile Update</h4>
+                                <p class="card-description">{{ $vendor->vendor_type == 1 ? 'Tailor' : ($vendor->vendor_type == 2 ? 'Fabric Seller' : 'Tailor & Fabric Seller') }}
+                                </p>
+                                <form class="profile-input-form customer-profile-form" action="{{ url('/updateProfile') }}" id="course_form" enctype="multipart/form-data" method="POST">
                                 @csrf
                                     <div class="row customer-input-inner">
                                         <div class="col-md-6">
@@ -32,7 +40,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputName2">Last Name</label>
-                                                <input type="text" class="form-control" name="last_name" id="exampleInputName2" placeholder="Last Name" value="" />
+                                                <input type="text" class="form-control" name="last_name" id="exampleInputName2" placeholder="Last Name" value="{{ $vendor->last_name }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -43,29 +51,73 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                            <label for="exampleInputName2">Mobile Number</label>
-                                            <input type="text" class="form-control" name="mobile_number" id="exampleInputName2" placeholder="Mobile Number" value="{{ $vendor->mobile_no }}" readonly/>
+                                            <label for="exampleInputNamedd4">Mobile Number</label>
+                                            <input type="text" class="form-control" name="mobile_number" id="exampleInputNamedd4" placeholder="Mobile Number" value="{{ $vendor->mobile_no }}"  {{ $vendor->mobile_no==''?'':'readonly' }}/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleInputName2">Business Name</label>
-                                                <input type="text" class="form-control" name="business_name" id="exampleInputName2" placeholder="Business Name" value="{{ $vendor->business_name }}" />
+                                                <label for="exampleInputName5">Business Name</label>
+                                                <input type="text" class="form-control" name="business_name" id="exampleInputName5" placeholder="Business Name" value="{{ $vendor->business_name }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                          <div class="form-group">
-                                            <label for="exampleSelectGender">Country</label>
-                                              <select class="form-select" name="country_id" id="country">
-                                                <option value="" disabled {{ !$vendor->country_id ? 'selected' : '' }}>Choose Country</option>
-                                                  @foreach($countries as $country)
-                                                    <option value="{{ $country->country_id }}" {{ $vendor->country_id == $country->country_id ? 'selected' : '' }}>{{ $country->country_name }}
-                                                    </option>
-                                                    @endforeach
+                                                <div class="form-group">
+                                                    <label for="exampleTextarea6">Experience (In Year)</label>
+                                                    <input type="text" class="form-control" name="experience" id="exampleTextarea6" placeholder="Experience (In Year)" value="{{ $vendor->experience }}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleTextarea11">Profile Description(Short)</label>
+                                                <textarea class="form-control" name="short_description" id="exampleTextarea11" rows="4">{{ $vendor->short_description }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleTextarea1">Profile Description(Long)</label>
+                                                <textarea class="form-control" name="long_description" id="exampleTextarea1" rows="4">{{ $vendor->long_description }}</textarea>
+                                            </div>
+                                        </div>
+                                        @if($vendor->vendor_type==0)
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleTextarea1">Vendor Type</label>
+                                                <select class="form-select" name="vendor_type" >
+                                                    <option value="1">Tailor</option>
+                                                    <option value="2">Fabric Seller</option>
+                                                    <option value="3">Tailor & Fabric Seller</option>
                                                 </select>
                                             </div>
-                                          </div>
-                                          <div class="col-md-6">
+                                        </div>
+                                        @endif
+                                        <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleTextarea1">Speciality</label>
+                                                    <select class="mySelect for" name="selected_ids[]" multiple="multiple" style="width: 100%">
+                                                    @foreach ($speciality as $option)
+                                                        <option value="{{ $option->id }}" 
+                                                            @if(in_array($option->id, $selected)) selected @endif>
+                                                            {{ $option->text }}
+                                                        </option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleSelectGender">Country</label>
+                                                    <select class="form-select" name="country_id" id="country">
+                                                    <option value="" disabled {{ !$vendor->country_id ? 'selected' : '' }}>Choose Country</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country->country_id }}" {{ $vendor->country_id == $country->country_id ? 'selected' : '' }}>
+                                                            {{ $country->country_name }}
+                                                        </option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleSelectGender">State</label>
                                                     <select class="form-select" name="state_id" id="state">
@@ -91,39 +143,25 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="exampleTextarea1">Postal Code</label>
-                                                    <input type="text" class="form-control" name="zipcode" id="exampleInputName2" placeholder="Postal Code" value="{{ $vendor->zip_code }}"/>
+                                                    <label for="exampleTextarea15">Postal Code</label>
+                                                    <input type="text" class="form-control" name="zipcode" id="exampleTextarea15" placeholder="Postal Code" value="{{ $vendor->zip_code }}"/>
                                                 </div>
                                             </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleSelectGender">Gender</label>
-                                                <select class="form-select" name="gender" id="exampleSelectGender">
-                                                    <option value="">Select Gender</option>
-                                                    <option value="1">Male</option>
-                                                    <option value="2">Female</option>
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        {{-- <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>File Upload</label>
-                                                <input type="file" id="profile-image" name="img" class="form-control" accept="image/*"/>
-
-                                            </div>
-                                        </div> --}}
+                                            
+                                            
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="exampleTextarea1">Address</label>
-                                                <textarea class="form-control" name="address" id="exampleTextarea1" rows="4">{{ $vendor->address }}</textarea>
+                                                <label for="exampleTextarea22">Address</label>
+                                                <textarea class="form-control" name="address" id="exampleTextarea22" rows="4">{{ $vendor->address }}</textarea>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                     <div class="d-flex mt-3 sub-cen-btn">
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <button class="btn btn-light">Cancel</button>
+                                        <button type="submit" class="btn btn-outline-success me-2">Submit</button>
+                                        <button class="btn btn-outline-danger">Cancel</button>
                                     </div>
                                 
                             </div>
@@ -135,7 +173,8 @@
         <div class="card-body">
             <h4>Profile Image</h4>
               <label for="profile-image" class="upload-label" style="cursor: pointer;">
-                <img id="preview" src="{{ $vendor->profile_img==''?'https://votivelaravel.in/tailor_hub/public/front_assets/images/design2.png': url('/public/upload').'/'.$vendor->profile_img }} " alt="Profile Image" style="width: 100%; max-width: 200px; border: 1px dashed #ccc; padding: 10px;" />
+                
+                <img id="preview" src="{{ empty($vendor->profile_img) ? asset('front_assets/images/design2.png') : url('/public').'/upload/'.$vendor->profile_img }} " alt="Profile Image" style="width: 100%; max-width: 200px; border: 1px dashed #ccc; padding: 10px;" />
                 <span>Please Upload Image</span>
               </label>
               <input type="file" id="profile-image" name="img" style="display: none;" accept="image/*" />
@@ -159,10 +198,136 @@
         }
     });
 </script>
+<script>
+window.addEventListener('load', function() {
+    $("#course_form").validate({
+        rules: {
+            name: { required: true },
+            last_name: { required: true },
+            email: {
+                required: true,
+                email: true
+            },
+            mobile_number: { required: true },
+            business_name: { required: true },
+            experience: { required: true },
+            short_description: { required: true },
+            long_description: { required: true },
+            vendor_type: { required: true },
+            selected_ids: { 
+                requiredMultiSelect: true,
+                
+            },
+            country_id: { required: true },
+            state_id: { required: true },
+            city_id: { required: true },
+            zipcode: { required: true },
+            address: { required: true },
+        },
+        messages: {
+            name: { required: "First name is required" },
+            last_name: { required: "Last name is required" },
+            email: { required: "Email is required", email: "Enter a valid email" },
+            mobile_number: { required: "Mobile number is required" },
+            business_name: { required: "Business Name is required" },
+            experience: { required: "Experience is required" },
+            short_description: { required: "Short Description is required" },
+            long_description: { required: "Long Description is required" },
+            vendor_type:{ required: "Vendor Type is required" },
+            selected_ids:{ 
+                requiredMultiSelect: "Please select at least one speciality.", 
+                
+            },
+            country_id:{ required: "Country is required" },
+            state_id:{ required: "State is required" },
+            city_id:{ required: "City is required" },
+            zipcode:{ required: "Postal Code is required" },
+            address:{ required: "Address is required" },
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+        if (element.hasClass('mySelect')) {
+            error.addClass('invalid-feedback');
+            error.insertAfter(element.next('.select2-container'));
+        } else {
+            error.addClass('invalid-feedback');
+            error.insertAfter(element);
+        }
+    },
+    });
+});
 
+
+</script>
                 </div>
             </div>
         </div>
 
+        <script>
+    $(document).ready(function () {
+  $('#country').change(function () {
+    
+    var cid = this.value;   //let cid = $(this).val(); we cal also write this.
+    $.ajax({
+      url: "{{url('/getstate')}}",
+      type: "POST",
+      datatype: "json",
+      data: {
+        country_id: cid,
+         '_token':'{{csrf_token()}}'
+      },
+      success: function(result) {
+        $('#state').html('<option value="">Select State</option>');
+        $.each(result.state, function(key, value) {
+          $('#state').append('<option value="' +value.state_id+ '">' +value.state_name+ '</option>');
+        });
+      },
+      errror: function(xhr) {
+          console.log(xhr.responseText);
+        }
+      });
+  });
 
+  $('#state').change(function () {
+    var sid = this.value;
+    $.ajax({
+      url: "{{url('/getcity')}}",
+      type: "POST",
+      datatype: "json",
+      data: {
+        state_id: sid,
+         '_token':'{{csrf_token()}}'
+      },
+      success: function(result) {
+        console.log(result);
+        $('#city').html('<option value="">Select City</option>');
+        $.each(result.city, function(key, value) {
+          $('#city').append('<option value="' +value.city_id+ '">' +value.city_name+ '</option>')
+        });
+      },
+      errror: function(xhr) {
+          console.log(xhr.responseText);
+        }
+    });
+  });
+});
+
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var data = @json($speciality); // Convert PHP array to JavaScript
+        
+        var placeholder = "Select options";
+
+        $(".mySelect").select2({
+            width: '100%',
+            data: data,
+            placeholder: placeholder,
+            allowClear: false,
+            minimumResultsForSearch: 5,
+        });
+    });
+</script>
 @endsection

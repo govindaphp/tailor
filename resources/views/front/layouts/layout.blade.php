@@ -21,6 +21,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/public') }}/front_assets/detail.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/public') }}/front_assets/feather.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/public') }}/front_assets/themify-icons.css">
 	
 	
 
@@ -47,7 +49,9 @@
         <script src="{{ url('/public') }}/front_assets/js/plugins.js"></script>
         <script src="{{ url('/public') }}/front_assets/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-        
+		
+<!-- 		<script src="{{ url('/public') }}/front_assets/js/dashboard.js"></script>
+ -->        
         @yield('content')
         @include('front.layouts.footer')
   </body>

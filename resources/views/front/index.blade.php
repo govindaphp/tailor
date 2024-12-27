@@ -671,6 +671,8 @@
         </div>
     </div>
     
+
+
     
 
     <script>
@@ -712,4 +714,8 @@
         console.log("Location already stored:", storedLatitude, storedLongitude);
     }
 </script>
+
+
+
+
     @endsection

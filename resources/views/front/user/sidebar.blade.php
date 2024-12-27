@@ -28,46 +28,43 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+      <a class="nav-link"  href="{{url('ticketList')}}" >
 <i class='fas fa-ticket-alt'></i>
         <span class="menu-title">Support Tickets</span>
         <i class="menu-arrow"></i>
       </a>
 
     </li>
-<!--li-- class="nav-item">
+    <li class="nav-item">
   <a class="nav-link" data-bs-toggle="collapse" href="#tables-menu" aria-expanded="false" aria-controls="tables-menu">
-<i class='fas fa-dice-d6'></i>
-    <span class="menu-title">Recent Activitie</span>
+<i class='fa fa-map-marker'></i>
+    <span class="menu-title">Shipping Address</span>
     <i class="menu-arrow fa fa-chevron-down"></i>
   </a>
   <!-- Dropdown items -->
-  <!--div class="collapse" id="tables-menu">
+  <div class="collapse" id="tables-menu">
     <ul class="nav flex-column sub-menu">
       <li class="nav-item">
-        <a class="nav-link" href="simple-table.html">Simple Table</a>
+        <a class="nav-link" href="{{url('addShipping')}}">Add Address</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="data-table.html">Data Table</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="responsive-table.html">Responsive Table</a>
+        <a class="nav-link" href="{{url('shippingAddress')}}">View Address</a>
       </li>
     </ul>
-  </!--div>
-</!--li-->
+  </div>
+</li>
 
     </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-<i class="fa fa-map-marker" aria-hidden="true"></i>
+    <!--li class="nav-item">
+      <a class="nav-link"  href="{{url('addShipping')}}" >
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
         <span class="menu-title">Shipping Address</span>
         <i class="menu-arrow"></i>
       </a>
-    </li>
+    </li-->
 
         <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+      <a class="nav-link" href="{{url('viewMeasurment')}}" >
 <i class="fa fa-balance-scale" aria-hidden="true"></i>
         <span class="menu-title">Measurements</span>
         <i class="menu-arrow"></i>

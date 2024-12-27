@@ -12,11 +12,20 @@
     </div>
 </div>
 
-<div class="container-fluid page-body-wrapper vendor-dasboard customer-dash">
-@include('front.vendor.vendor_sidebar')
 
-            <div class="col-md-9">
-                <div class="row product-list">
+          
+
+<div class="container-fluid page-body-wrapper vendor-dasboard customer-dash">
+
+@include('front.vendor.vendor_sidebar')
+  <div class="col-md-9">
+    <div class="row product-list">
+        @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ Session::get('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            @endif
                     <table id="myTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -51,7 +60,7 @@
                   {{ $list->is_active ? 'checked' : '' }}>
               </td>
               <td>
-                <a href="{{ route('addColor',$list->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                <a href="{{ route('addProduct',$list->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                 <a title="Delete Product" class="btn btn-sm btn-danger" href="{{ route('deleteProduct',$list->id)}}" onclick="return confirm('Are you sure you want to delete this Product?')"><i class="fa fa-trash"></i>
               </td>
             </tr>

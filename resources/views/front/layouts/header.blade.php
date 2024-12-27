@@ -3,7 +3,7 @@
     </div>
   </div>
 
-  
+
 
   <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch" aria-labelledby="Search">
     <div class="offcanvas-header justify-content-end">
@@ -32,18 +32,18 @@
                   <small>Address will goes here</small>
               </div>
           </div>
-           @if (Auth::guard("user")->check() || Auth::guard("vendor")->check()) 
+           @if (Auth::guard("user")->check() || Auth::guard("vendor")->check())
 
            <div class="col-lg-5 text-end">
               <div class="h-100 btns-set d-inline-flex align-items-center py-0 me-1">
                   <a href="{{ url('/logout') }}">Logout <i class="bi bi-box-arrow-right"></i></a>
               </div>
-              
+
           </div>
 
-          
+
                 @else
-        
+
 
           <div class="col-lg-5 text-end">
               <div class="h-100 btns-set d-inline-flex align-items-center py-0 me-1">
@@ -53,7 +53,7 @@
                   <a href="{{ url('/login') }}">Login <i class="bi bi-arrow-right"></i></a>
               </div>
           </div>
- @endif 
+ @endif
       </div>
   </div>
   </div>
@@ -97,28 +97,28 @@
 
                 <ul class="navbar-nav justify-content-end desk-hide menu-list list-unstyled d-flex gap-md-3 mb-0">
                   <li class="nav-item active">
-                    <a href="#" class="nav-link">Home <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{ url('/') }}" class="nav-link">Home </a>
                   </li>
                   <li class="nav-item dropdown">
                     <a href="{{ url('/AllTailors') }}" class="nav-link">Browse Tailors </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Browse Fabrics <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{ route('browseFebrics') }}" class="nav-link">Browse Fabrics </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Explore Designs <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{ route('exploredesign') }}" class="nav-link">Explore Designs </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Explore Fabrics <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{route('exploreProducts')}}" class="nav-link">Explore Products </a>
                   </li>
                 </ul>
 
                 <ul class="d-flex list-unstyled m-2">
-                  
-                  @if (Auth::guard("user")->check()) 
+
+                  @if (Auth::guard("user")->check())
                   <li><a href="#"><i class="bi bi-bell"></i></a></li>
-                  <li class="cart"><a href="#"><i class="bi bi-bag"></i> <span>3</span></a></li>
-                  @endif  
+                  <li class="cart"><a href="#"><i class="bi bi-bag"></i> <span>6</span></a></li>
+                  @endif
                   <li class="d-lg-none">
                       <a href="#" class="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
                         <i class="bi bi-search"></i>
@@ -159,7 +159,12 @@
 
                 <ul class="navbar-nav justify-content-end  menu-list list-unstyled d-flex gap-md-3 mb-0">
                   <li class="nav-item active">
-                    <a href="#" class="nav-link">Home <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{ url('/') }}" class="nav-link">Home </a>
+                  </li>
+
+                  @if (Auth::guard("user")->check())
+                  <li class="nav-item">
+                    <a href="{{url('customerDashboard')}}" class="nav-link">Dashboard </a>
                   </li>
                   <li class="nav-item dropdown">
                     <a href="{{ url('/AllTailors') }}" class="nav-link">Browse Tailors </a>
@@ -168,16 +173,35 @@
                     <a href="{{ route('browseFebrics') }}" class="nav-link">Browse Fabrics </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Explore Designs <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{ route('exploredesign') }}" class="nav-link">Explore Designs </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Explore Fabrics <i class="bi bi-chevron-down"></i></a>
+                    <a href="{{route('exploreProducts')}}" class="nav-link">Explore Products </a>
                   </li>
+                  @elseif(Auth::guard("vendor")->check())
+                  <li class="nav-item">
+                    <a href="{{url('vendorsDasboard')}}" class="nav-link">Dashboard </a>
+                  </li>
+                  @else
+                  <li class="nav-item dropdown">
+                    <a href="{{ url('/AllTailors') }}" class="nav-link">Browse Tailors </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('browseFebrics') }}" class="nav-link">Browse Fabrics </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('exploredesign') }}" class="nav-link">Explore Designs </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('exploreProducts')}}" class="nav-link">Explore Products </a>
+                  </li>
+                  @endif
+
                 </ul>
 
                 <ul class="d-flex d--none list-unstyled mt-0">
                   <li><a href="#"><i class="bi bi-bell"></i></a></li>
-                  <li class="cart"><a href="#"><i class="bi bi-bag"></i> <span>3</span></a></li>
+                  <li class="cart"><a href="#"><i class="bi bi-bag"></i> <span>4</span></a></li>
                     <li class="d-lg-none">
                       <a href="#" class="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
                         <i class="bi bi-search"></i>

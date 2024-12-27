@@ -142,9 +142,7 @@
 													<option value="{{$show_country->country_id}}">{{$show_country->country_name}}</option>
                                                     @endforeach
 												</select>
-                                    <!-- <input type="text"
-                                    class="form-control" placeholder="Enter Country" name="user_country"> -->
-                                    <!-- oninput="value=value.replace(/[^\a-\z\A-\Z ]/g,'')"  -->
+                                    
                                 </div>
 
                                 <div class="col-md-6">
