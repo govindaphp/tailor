@@ -1,259 +1,95 @@
-@extends('front.layouts.layout')
+@extends('front.layouts.layout') @section('content')
 
-@section('content')
-<style>
-  .chat-container {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .chat-header {
-    border-bottom: 1px solid #ddd;
-  }
-  .chat-body {
-    flex: 1;
-  }
-  .chat-footer {
-    border-top: 1px solid #ddd;
-  }
-  .message-bubble {
-    max-width: 100%;
-  }
-  input.form-control.me-2 {
-    box-shadow: none !important;
-}
-  .message-avatar img {
-    width: 40px;
-    height: 40px;
-  }
-  /* Sidebar styling */
-  .sidebar {
-    width: 250px;
-    background-color: #f8f9fa;
-    border-right: 1px solid #ddd;
-    padding: 20px;
-  }
-  .sidebar .status {
-    font-size: 14px;
-    color: #888;
-  }
-  .sidebar .status.online {
-    color: green;
-  }
-  .sidebar .status.offline {
-    color: red;
-  }
-
-
-</style>
+<!-- Bootstrap Toggle CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet" />
 
 <div class="banner-tailors">
-  <div class="container browse-tailors">
-    <div class="row browse-content">
-      <h1 class="text-white">Messages</h1>
+    <div class="container browse-tailors">
+        <div class="row browse-content">
+            <h1 class="text-white">Message</h1>
+        </div>
     </div>
-  </div>
 </div>
 
-<div class="container-fluid page-body-wrapper vendor-dashboard d-flex pt-5 pb-5">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h5>All Users</h5>
-    <div class="status online">Online</div>
-    <ul>
-      @foreach ($allMerchecnts as $merchent)
-      <li data-id="{{$merchent->vendor_id}}" class="merchant-item"><u>{{$merchent->name}}</u>
-        @if ($merchent->online_status == 1)
-        <i class="fa fa-circle text-success" aria-hidden="true" title="Online"></i>
-        @endif
-      </li>
-      @endforeach
-    </ul>
+<div class="container-fluid page-body-wrapper vendor-dasboard customer-dash">
+    @include('front.user.sidebar')
+    <div class="col-md-9">
+        <div class="row message-list">
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="card m-0">
+                        <!-- Row start -->
+                        <div class="row no-gutters">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3 message-list-left">
+                                <div class="users-container">
+                                    <div class="chat-search-box">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Search" />
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-info">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="users">
+                                        @foreach ($allMerchecnts as $merchent)
+                                            <li class="person merchant-item" data-chat="person1" data-id="{{$merchent->vendor_id}}">
+                                                <div class="user">
+                                                    <img src="{{$merchent->profile_img==''? url('/public').'/images/tailor-img-two.png': url('/public').'/admin/uploads/user/'.$merchent->profile_img}}" alt="Vendor" />
+                                                    <!--span-- class="status busy"></!--span-->
+                                                </div>
+                                                <p class="name-time">
+                                                    <span class="name">{{$merchent->name}}</span>
+                                                </p>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9 message-list-right">
+                                <div class="selected-user">
+                                    <span>To: <span class="name">Emily Russell</span></span>
+                                </div>
+                                <div class="chat-container" >
+                                    <ul class="chat-box chatContainerScroll" style="height: 400px; overflow-y: scroll;" id="chat_div">
+                                        
+                                        <li class="chat-right">
+                                            <div class="chat-hour">08:59</div>
+                                            <div class="chat-text">Have you faced any problems at the last phase of the project?</div>
+                                            <div class="chat-avatar">
+                                                <img src="https://votivetech.in/tailor_hub/public/front_assets/images/reviw1.png" alt="Retail Admin" />
+                                                <div class="chat-name">Jin</div>
+                                            </div>
+                                        </li>
+                                        <li class="chat-left">
+                                            <div class="chat-avatar">
+                                                <img src="https://votivetech.in/tailor_hub/public/front_assets/images/reviw3.png" alt="Retail Admin" />
+                                                <div class="chat-name">Russell</div>
+                                            </div>
+                                            <div class="chat-text">
+                                                Actually everything was fine. <br />
+                                                I'm very excited to show this to our team.
+                                            </div>
+                                            <div class="chat-hour">07:00</div>
+                                        </li>
 
-    <!-- You can add more information about the user here -->
-  </div>
-
-  <!-- Chat Container -->
-  <div class="col-md-9">
-    <h3 id="chat_head"><u>Please select a user:-</u> </h3>
-    <form action="#" id="chat_form" method="POST" enctype="multipart/form-data">
-    <div class="chat-container" id="chat_container" style="display: none">
-
-
-      <div class="chat-body p-3 bg-light" style="height: 400px; overflow-y: scroll;" id="chat_div">
-        <!-- Example message from the receiver -->
-
-      </div>
-
-      <div class="chat-footer d-flex align-items-center p-3 bg-white">
-        <input type="hidden" name="auth_id" id="auth_id" value="{{auth('user')->id()? auth('user')->id() :'0'}}">
-        <input type="text" id="my_msg" class="form-control me-2" placeholder="Type a message..." required>
-        <button type="button" class="btn btn-primary me-2" onclick="myFunction()">
-          <i class="bi bi-send"></i> Send
-        </button>
-        <label class="btn btn-secondary">
-          <i class="bi bi-paperclip"></i>
-          <input type="file" hidden>
-        </label>
-      </div>
-      <div class="center-message text-center">
-        <p id="error_message" class="text-danger" style="display:none;">Please enter a message!</p>
-      </div>
-    </div>
-    </form>
-  </div>
-</div>
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
-<script>
-
-var currentUserId = $('#auth_id').val();
-
-  // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = true;
-
-  var pusher = new Pusher('3807eb5cfd5189202b86', {
-    cluster: 'ap2'
-  });
-
-  var channel = pusher.subscribe('Laravel-Chat');
-  channel.bind('my-event', function(data) {
-    var userData = data.user;
-
-    var messageHtml;
-
-    if (userData.sender_id == currentUserId ) {
-    // Append the message to the sender container
-    messageHtml =`
-        <div class="d-flex justify-content-end mb-3">
-        <div class="message-content text-end">
-            <div class="message-bubble bg-primary text-white p-2 rounded">
-                <p>${userData.msg}<br><span>${userData.time}</span></p>
+                                    </ul>
+                                    <div class="form-group mt-3 mb-0">
+                                        <input type="hidden" name="auth_id" id="auth_id" value="{{auth('user')->id()? auth('user')->id() :'0'}}">
+                                        <textarea class="form-control" rows="3" placeholder="Type your message here..." id="my_msg"></textarea>
+                                    </div>
+                                    <div class="chat-buttons mt-2 d-flex justify-content-end two-btn-send">
+                                        <button class="btn btn-primary me-2" onclick="myFunction()">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="message-avatar ms-3">
-            <img src="${userData.profile_image == null 
-                ? window.location.origin +'/public/front_assets/images/reviw1.png' 
-                : window.location.origin + '/public/admin/uploads/user/' + userData.profile_image}" 
-            alt="Sender Avatar" class="rounded-circle">
-            <p>${userData.name}</p>
-        </div>
-    </div>`;
 
-  } else {
-    // Append the message to the receiver container
-    messageHtml =
-    `<div class="chat-message d-flex mb-3">
-    <div class="message-avatar ms-3">
-        <img src="${userData.profile_image == null
-            ? window.location.origin +'/public/front_assets/images/reviw1.png' 
-            : window.location.origin +'/public/admin/uploads/user/' + userData.profile_image}" 
-          alt="Sender Avatar" class="rounded-circle">
-        <p>${userData.name}</p>
+        </div>
     </div>
-      <div class="message-content">
-        <div class="message-bubble bg-white p-2 rounded">
-          <p>${userData.msg}<br><span>${userData.time}</span></p>
-        </div>
-      </div>
-      </div>`;
-  }
-
-  $('#chat_div').append(messageHtml);
-
-// Optionally scroll to the bottom of the chat for new messages
-  $('#chat_div').animate({
-        scrollTop: $('#chat_div')[0].scrollHeight
-    }, 500);
-
-  });
-</script>
-
-<script>
-
-  $(document).on('click', '.merchant-item', function() {
-    const merchantId = $(this).data('id'); // Get the data-id attribute
-
-    // Perform AJAX request
-    $.ajax({
-        url: "{{url('/getMerchent')}}", // Replace with your backend route
-        type: 'POST', 
-        datatype: "html",// or 'GET' depending on your requirement
-        data: {
-            id: merchantId,
-            _token: '{{ csrf_token() }}' // Include CSRF token for security if using Laravel
-        },
-        success: function(response) {
-            $('#chat_container').show();
-            $('#chat_head').hide();
-            $('#chat_div').html(response)
-        },
-        error: function(xhr) {
-            // Handle error
-            console.error('Error:', xhr.responseText);
-        }
-    });
-});
-
-$(document).on('keypress', '#my_msg', function(event) {
-		if (event.which == 13) {
-			var message = $('#my_msg').val();
-			//var  message = $("#message").val();
-			if ($.trim(message) == '') {
-				$('#error_message').show();
-				return false;
-			} else {
-				event.preventDefault();
-				myFunction();
-			}
-		}
-});
-
-
-</script>
-
-<script>
-  function myFunction() {
-    var my_msg = $('#my_msg').val();
-    var sender_id = $('#auth_id').val();
-    var reciver_id = $('#reciver_id').val();
-    var reply_message_id = $('#reply_message_id').val();
-
-    if ($.trim(my_msg) == '') {
-				$('#error_message').show();
-				return false;
-			} else {
-        $('#error_message').hide();
-		}
-
-    var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    $.ajax({
-        url: "{{url('/userMessageSubmit')}}", // Replace with your backend route
-        type: 'POST', 
-        datatype: "json",// or 'GET' depending on your requirement
-        data: {
-          my_msg: my_msg,
-          sender_id: sender_id,
-          reciver_id: reciver_id,
-          reply_message_id: reply_message_id,
-          userTimeZone: userTimeZone,
-            _token: '{{ csrf_token() }}' // Include CSRF token for security if using Laravel
-        },
-        success: function(response) {
-          $('#my_msg').val('');
-          $('#chat_div').append(response.html);
-        },
-        error: function(xhr) {
-            // Handle error
-            console.error('Error:', xhr.responseText);
-        }
-    });
-
-    
-  }
-</script>
+</div>
 @endsection

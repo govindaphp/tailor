@@ -1,6 +1,7 @@
 @extends('front.layouts.layout')
 
 @section('content')
+
 <style>
     .pagination .flex.justify-between.flex-1.sm\:hidden {
     display: flex;
@@ -97,7 +98,7 @@
                     </div>
                     <div class="card-body">
                         <div class="three-icon-list">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <i class="fas fa-comment-alt vchat" aria-hidden="true" cid="{{$customerId}}" vid="{{ $tailor->vendor_id }}"></i>
                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                             <i class="fa fa-heart vlike" aria-hidden="true" vid="{{ $tailor->vendor_id }}" style="color: {{ $tailor->is_liked ? 'red' : 'gray' }};"></i>
                         </div>
@@ -130,7 +131,27 @@
 
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    $('.vchat').on("click",function(){
+        var vendor_id = $(this).attr('vid');
+        var customer_id = $(this).attr('cid');
+        
+        if(!customer_id)
+        {
+            Swal.fire({
+                        title: "Please login before proceed to vendor message",
+                        icon: "info",
+                        draggable: true
+                        });
+        }
+        else
+        {
+            window.location.href = "<?php echo url('/message'); ?>?vendor_id=" + encodeURIComponent(vendor_id) + "&customer_id=" + encodeURIComponent(customer_id);
+        }
+    });
+
+
     $('.vlike').on("click", function() {
         var vendor_id = $(this).attr('vid');
         

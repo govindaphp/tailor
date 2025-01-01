@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\ChatMessage;
 use App\Models\ChatStatus;
 use App\Models\Vendor;
+use App\Models\Conversation;
 
 use Illuminate\Validation\Rule;
 use Session;
@@ -35,12 +36,27 @@ class ChatController extends Controller
 {
     public function message()
     {
+		$vendor_id 		= request('vendor_id');
+		$customer_id 	= request('customer_id');
+		$user_id	 	= auth('user')->id();
+		$check=Conversation::where('customer_id', $customer_id)->where('vendor_id', $vendor_id)->first();
+		if(!$check)
+		{
+			$conv = new Conversation;
+			$conv->customer_id = auth('user')->id();
+			$conv->vendor_id = $vendor_id;
+			$conv->created_at = date('Y-m-d H:i:s');
+			$conv->save();
+		}
 
-        $user_id = auth('user')->id();
-  
         $data['user_id'] =  $user_id;
-  
-        $data['allMerchecnts'] = Vendor::where('vendor_status','1')->get();
+		$data['allMerchecnts'] = DB::table('conversations')
+								->join('vendors', 'conversations.vendor_id', '=', 'vendors.vendor_id')
+								->where('conversations.customer_id', $customer_id)
+								->select('vendors.*')
+								->get();
+
+        
   
         return view('front.user.message',$data);
   

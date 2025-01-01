@@ -228,7 +228,7 @@ class HomeController extends Controller{
 			->whereIn('v.vendor_type', [1, 3])
 			->paginate(3);
 
-		return view("front.tailorlist",compact('tailors'));
+		return view("front.tailorlist",compact('tailors','customerId'));
 	}
 	public function likeVendor(Request $request)
 	{
